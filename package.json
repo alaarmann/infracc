@@ -15,7 +15,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/alaarmann/infracc.git"
@@ -25,5 +25,5 @@
   "bugs": {
     "url": "https://github.com/alaarmann/infracc/issues"
   },
-  "homepage": "https://github.com/alaarmann/infracc",
+  "homepage": "https://github.com/alaarmann/infracc"
 }
