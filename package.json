@@ -1,0 +1,29 @@
+{
+  "name": "infracc",
+  "version": "0.0.0",
+  "description": "Account for use of infrastucture facilities",
+  "private": true,
+  "devDependencies": {
+    "react-scripts": "0.8.0"
+  },
+  "dependencies": {
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alaarmann/infracc.git"
+  },
+  "author": "Alexander Laarmann <alaarmann@gmx.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alaarmann/infracc/issues"
+  },
+  "homepage": "https://github.com/alaarmann/infracc",
+}
