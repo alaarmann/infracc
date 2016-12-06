@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import Filter from './Filter';
-import Resources from './Resources';
+import ActionFilter from './ActionFilter';
+import VisibleResources from './VisibleResources';
 import './App.css';
-
-const resources=['Resource01', 'Resource02', 'Resource03'];
 
 class App extends Component {
   render() {
     return (
       <div className="app">
-        <Filter/>
-	<Resources resources={resources}/>
+        <ActionFilter/>
+	<VisibleResources/>
       </div>
     );
   }

@@ -1,7 +1,10 @@
 import React from 'react';
 
-export default (props)=> (
+export default ({onFilterChange})=> (
   <div className="Filter">
-    <input/> 
+    <input onChange={e => {
+         e.preventDefault()
+         onFilterChange(e.target.value)
+       }}/> 
   </div>
 )
