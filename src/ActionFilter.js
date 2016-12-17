@@ -2,8 +2,6 @@ import { connect } from 'react-redux'
 import { filterResources } from './actions'
 import Filter from './Filter'
 
-const mapStateToProps = () => {return {};}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     onFilterChange: (filter) => {
@@ -13,7 +11,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const ActionFilter = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Filter)
 

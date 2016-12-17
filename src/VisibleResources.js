@@ -7,11 +7,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = () => {return{};}
-
 const VisibleResources = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Resources)
 
 export default VisibleResources

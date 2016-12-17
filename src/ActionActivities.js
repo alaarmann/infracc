@@ -2,8 +2,6 @@ import { connect } from 'react-redux'
 import { addResource } from './actions'
 import Activities from './Activities'
 
-const mapStateToProps = () => {return {};}
-
 const mapDispatchToProps = (dispatch) => {
   return {
     onCreateButtonClick: (resourceName) => {
@@ -13,7 +11,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const ActionActivities = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Activities)
 
