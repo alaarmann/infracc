@@ -3,7 +3,7 @@ import Resources from './Resources'
 
 const mapStateToProps = (state) => {
   return {
-    resources: state.resources.filter( res => res.key.indexOf(state.filter) >= 0)
+    resources: state.resources.items.filter( res => res.key.indexOf(state.filter) >= 0)
   }
 }
 
