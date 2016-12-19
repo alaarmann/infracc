@@ -9,7 +9,7 @@ function filter(state = '', action) {
       return state
   }
 }
-const initialResources=['Resource01', 'Resource02', 'Resource03'];
+const initialResources=[{_id: '001', key : 'Resource01'}, {_id: '002', key : 'Resource02'}, {_id: '003', key : 'Resource03'}];
 function resources(state = initialResources, action) {
   switch (action.type) {
     case ADD_RESOURCE:
