@@ -21,7 +21,7 @@ function resources(state = {
           isFetching: false,
           needsRefresh: false,
           items: [...state.items, action.resource],
-          lastUpdated: action.receivedAt
+          lastUpdated: null
       });
       case REFRESH_RESOURCES:
           return Object.assign({}, state, {
