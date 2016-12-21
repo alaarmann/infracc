@@ -30,7 +30,7 @@ export function receiveResources(resources) {
         receivedAt : Date.now() };
 }
 
-export function fetchResources() {
+function fetchResources() {
 
     return function (dispatch) {
 
@@ -57,5 +57,25 @@ export function fetchResources() {
 
         // In a real world app, you also want to
         // catch any error in the network call.
+    }
+
+}
+
+function needsFetch(resources) {
+    if (resources.isFetching) {
+        return false
+    } else {
+        return resources.needsRefresh
+    }
+}
+
+export function fetchResourcesIfNeeded() {
+    return (dispatch, getState) => {
+        if (needsFetch(getState().resources)) {
+            return dispatch(fetchResources())
+        } else {
+            // Let the calling code know there's nothing to wait for.
+            return Promise.resolve()
+        }
     }
 }

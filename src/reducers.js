@@ -12,7 +12,7 @@ function filter(state = '', action) {
 
 function resources(state = {
     isFetching: false,
-    needsRefresh: false,
+    needsRefresh: true,
     items: []
 }, action) {
   switch (action.type) {

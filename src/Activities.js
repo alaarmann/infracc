@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({onCreateButtonClick})=> {
+export default ({onCreateButtonClick, onRefreshButtonClick})=> {
   var newResourceNameInput = null;
 
   return <div className="Activities">
@@ -11,6 +11,10 @@ export default ({onCreateButtonClick})=> {
     <button onClick={e => {
          e.preventDefault()
          onCreateButtonClick(newResourceNameInput.value)
-       }}>+</button> 
+       }}>+</button>
+      <button onClick={e => {
+          e.preventDefault()
+          onRefreshButtonClick()
+      }}>Refresh</button>
   </div>
 }
