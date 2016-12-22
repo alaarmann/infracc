@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { FILTER_RESOURCES, ADD_RESOURCE, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES } from './actions'
+import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE } from './actions'
 
 function filter(state = '', action) {
   switch (action.type) {
@@ -16,13 +16,6 @@ function resources(state = {
     items: []
 }, action) {
   switch (action.type) {
-    case ADD_RESOURCE:
-      return Object.assign({}, state, {
-          isFetching: false,
-          needsRefresh: false,
-          items: [...state.items, action.resource],
-          lastUpdated: null
-      });
       case REFRESH_RESOURCES:
           return Object.assign({}, state, {
               needsRefresh: true
@@ -45,9 +38,26 @@ function resources(state = {
       return state
   }
 }
+
+function creator(state = {
+    isFetching: false
+}, action) {
+    switch (action.type) {
+        case REQUEST_CREATE_RESOURCE:
+            return {...state,
+                isFetching: true };
+        case RECEIVE_CREATE_RESOURCE:
+            return {...state,
+                isFetching: false };
+        default:
+            return state
+    }
+}
+
 const app = combineReducers({
-  filter,
-  resources
+    filter,
+    resources,
+    creator
 })
 
 export default app
