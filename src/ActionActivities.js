@@ -2,6 +2,14 @@ import { connect } from 'react-redux'
 import { addResource, refreshResources, fetchResourcesIfNeeded } from './actions'
 import Activities from './Activities'
 
+const mapStateToProps = (state) => {
+    return {
+        isCreateFetching : state.creator.isFetching,
+        isResourcesFetching : state.resources.isFetching,
+        lastUpdated : state.resources.lastUpdated
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         onCreateButtonClick: (resourceKey) => {
@@ -17,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const ActionActivities = connect(
-  null,
+    mapStateToProps,
   mapDispatchToProps
 )(Activities)
 
