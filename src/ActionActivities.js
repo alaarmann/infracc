@@ -4,8 +4,8 @@ import Activities from './Activities'
 
 const mapStateToProps = (state) => {
     return {
-        isCreateFetching : state.creator.isFetching,
-        isResourcesFetching : state.resources.isFetching,
+        isCreateButtonDisabled : state.creator.isFetching,
+        isRefreshButtonDisabled : state.resources.isFetching,
         lastUpdated : state.resources.lastUpdated
     }
 }

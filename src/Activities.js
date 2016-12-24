@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({onCreateButtonClick, onRefreshButtonClick, isCreateFetching, isResourcesFetching })=> {
+export default ({onCreateButtonClick, onRefreshButtonClick, isCreateButtonDisabled, isRefreshButtonDisabled })=> {
   var newResourceNameInput = null;
 
   return <div className="Activities">
@@ -11,10 +11,10 @@ export default ({onCreateButtonClick, onRefreshButtonClick, isCreateFetching, is
     <button onClick={e => {
          e.preventDefault()
          onCreateButtonClick(newResourceNameInput.value)
-       }} disabled={isCreateFetching}>+</button>
+       }} disabled={isCreateButtonDisabled}>+</button>
       <button onClick={e => {
           e.preventDefault()
           onRefreshButtonClick()
-      }} disabled={isResourcesFetching}>Refresh</button>
+      }} disabled={isRefreshButtonDisabled}>Refresh</button>
   </div>
 }
