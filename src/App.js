@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ActionFilter from './ActionFilter';
 import ActionActivities from './ActionActivities';
 import VisibleResources from './VisibleResources';
+import MessagesContainer from './MessagesContainer';
 import './App.css';
 
 class App extends Component {
@@ -11,6 +12,7 @@ class App extends Component {
         <ActionFilter/>
         <ActionActivities/>
 	<VisibleResources/>
+          <MessagesContainer/>
       </div>
     );
   }

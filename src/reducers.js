@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE } from './actions'
+import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE } from './actions'
 
 function filter(state = '', action) {
   switch (action.type) {
@@ -32,6 +32,11 @@ function resources(state = {
               items: action.resources,
               lastUpdated: action.receivedAt
           })
+      case ERROR_RESOURCES:
+          return {...state,
+              isFetching: false,
+              needsRefresh: false
+          }
 
 
       default:
@@ -49,6 +54,24 @@ function creator(state = {
         case RECEIVE_CREATE_RESOURCE:
             return {...state,
                 isFetching: false };
+        case ERROR_CREATE_RESOURCE:
+            return {...state,
+                isFetching: false };
+        default:
+            return state
+    }
+}
+
+function messages(state = {
+    errorMessage: null
+}, action) {
+    switch (action.type) {
+        case ERROR_CREATE_RESOURCE:
+            return {...state,
+                errorMessage: action.errorMessage };
+        case ERROR_RESOURCES:
+            return {...state,
+                errorMessage: action.errorMessage };
         default:
             return state
     }
@@ -57,7 +80,8 @@ function creator(state = {
 const app = combineReducers({
     filter,
     resources,
-    creator
+    creator,
+    messages
 })
 
 export default app

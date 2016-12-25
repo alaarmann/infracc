@@ -5,8 +5,10 @@ export const FILTER_RESOURCES = 'FILTER_RESOURCES';
 export const REFRESH_RESOURCES = 'REFRESH_RESOURCES';
 export const REQUEST_RESOURCES = 'REQUEST_RESOURCES';
 export const RECEIVE_RESOURCES = 'RECEIVE_RESOURCES';
+export const ERROR_RESOURCES = 'ERROR_RESOURCES';
 export const REQUEST_CREATE_RESOURCE = 'REQUEST_CREATE_RESOURCE';
 export const RECEIVE_CREATE_RESOURCE = 'RECEIVE_CREATE_RESOURCE';
+export const ERROR_CREATE_RESOURCE = 'ERROR_CREATE_RESOURCE';
 
 // Action creators
 export function filterResources(filterExpression) {
@@ -27,12 +29,22 @@ export function receiveResources(resources) {
         receivedAt : Date.now() };
 }
 
+export function handleResourcesError(errorMessage) {
+    return { type: ERROR_RESOURCES,
+        errorMessage };
+}
+
 export function requestCreateResource() {
     return { type: REQUEST_CREATE_RESOURCE };
 }
 
 export function receiveCreateResource() {
     return { type: RECEIVE_CREATE_RESOURCE };
+}
+
+export function handleCreateResourceError(errorMessage) {
+    return { type: ERROR_CREATE_RESOURCE,
+        errorMessage };
 }
 
 function fetchResources() {
@@ -51,17 +63,14 @@ function fetchResources() {
         // This is not required by thunk middleware, but it is convenient for us.
 
         return fetch(`http://localhost:8080/infracc/resources`)
-            .then(response => response.json())
-            .then(json =>
+            .then(response =>
 
                 // We can dispatch many times!
                 // Here, we update the app state with the results of the API call.
 
-                dispatch(receiveResources(json))
+                dispatch(receiveResources(response.json)), error => dispatch(handleResourcesError(error.message || 'An error occurred'))
             )
 
-        // In a real world app, you also want to
-        // catch any error in the network call.
     }
 
 }
@@ -106,10 +115,9 @@ export function addResource(resource) {
             {method: 'POST',
                 headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=utf-8'},
                 body: payload})
-            .then(response => dispatch(receiveCreateResource()))
+            .then(response => dispatch(receiveCreateResource()),
+                error => dispatch(handleCreateResourceError(error.message || 'An error occurred')))
 
-        // In a real world app, you also want to
-        // catch any error in the network call.
     }
 
 }
