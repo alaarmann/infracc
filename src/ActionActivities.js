@@ -14,7 +14,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onCreateButtonClick: (resourceKey) => {
             dispatch(addResource({'key' : resourceKey}))
-            dispatch(refreshResources())
             dispatch(fetchResourcesIfNeeded())
         },
         onRefreshButtonClick: () => {

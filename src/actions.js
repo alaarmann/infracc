@@ -63,13 +63,15 @@ function fetchResources() {
         // This is not required by thunk middleware, but it is convenient for us.
 
         return fetch(`http://localhost:8080/infracc/resources`)
-            .then(response =>
+            .then(response => response.json())
+            .then(json =>
 
                 // We can dispatch many times!
                 // Here, we update the app state with the results of the API call.
 
-                dispatch(receiveResources(response.json)), error => dispatch(handleResourcesError(error.message || 'An error occurred'))
+                dispatch(receiveResources(json))
             )
+            .catch(error => dispatch(handleResourcesError(error.message || 'An error occurred')))
 
     }
 

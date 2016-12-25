@@ -37,6 +37,9 @@ function resources(state = {
               isFetching: false,
               needsRefresh: false
           }
+      case RECEIVE_CREATE_RESOURCE:
+          return {...state,
+              needsRefresh: true };
 
 
       default:
