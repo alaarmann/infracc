@@ -68,6 +68,29 @@ describe('Asyncronous actions', () => {
         })
     })
 
+    describe('needsFetch is false', () => {
+        it('should not create any action', () => {
+
+            const initialState = {
+                resources: {
+                    isFetching: false,
+                    needsRefresh: false,
+                    items: []
+                }
+            }
+
+            const store = mockStore(initialState)
+
+            return store.dispatch(actions.fetchResourcesIfNeeded())
+                .then(() => { // return of async actions
+                    // mockStore offers triggered actions via getActions()
+                    expect(store.getActions().length).toBe(0)
+                })
+
+
+        })
+    })
+
     describe('addResource', () => {
         it('should create REQUEST_CREATE_RESOURCE, execute fetch and create action RECEIVE_CREATE_RESOURCE', () => {
             const newResource = {prop1 : 'val1', prop2 : 'val2'}
