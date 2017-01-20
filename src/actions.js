@@ -19,30 +19,30 @@ export function refreshResources() {
   return { type: REFRESH_RESOURCES };
 }
 
-export function requestResources() {
+function requestResources() {
   return { type: REQUEST_RESOURCES };
 }
 
-export function receiveResources(resources) {
+function receiveResources(resources) {
     return { type: RECEIVE_RESOURCES,
         resources,
         receivedAt : Date.now() };
 }
 
-export function handleResourcesError(errorMessage) {
+function handleResourcesError(errorMessage) {
     return { type: ERROR_RESOURCES,
         errorMessage };
 }
 
-export function requestCreateResource() {
+function requestCreateResource() {
     return { type: REQUEST_CREATE_RESOURCE };
 }
 
-export function receiveCreateResource() {
+function receiveCreateResource() {
     return { type: RECEIVE_CREATE_RESOURCE };
 }
 
-export function handleCreateResourceError(errorMessage) {
+function handleCreateResourceError(errorMessage) {
     return { type: ERROR_CREATE_RESOURCE,
         errorMessage };
 }
