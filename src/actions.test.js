@@ -16,6 +16,15 @@ describe('filterResources', () => {
     })
 })
 
+describe('refreshResources', () => {
+    it('should create an action to refresh resources', () => {
+        const expectedAction = {
+            type: actions.REFRESH_RESOURCES
+        }
+        expect(actions.refreshResources()).toEqual(expectedAction)
+    })
+})
+
 
 describe('Asyncronous actions', () => {
     const middlewares = [ thunk ]
