@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE } from './actions'
 
-function filter(state = '', action) {
+export function filter(state = '', action) {
   switch (action.type) {
     case FILTER_RESOURCES:
       return action.filterExpression
@@ -10,7 +10,7 @@ function filter(state = '', action) {
   }
 }
 
-function resources(state = {
+export function resources(state = {
     isFetching: false,
     needsRefresh: true,
     items: []
@@ -47,7 +47,7 @@ function resources(state = {
   }
 }
 
-function creator(state = {
+export function creator(state = {
     isFetching: false
 }, action) {
     switch (action.type) {
@@ -65,7 +65,7 @@ function creator(state = {
     }
 }
 
-function messages(state = {
+export function messages(state = {
     errorMessage: null
 }, action) {
     switch (action.type) {
