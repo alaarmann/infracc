@@ -3,6 +3,7 @@ import { isFSA } from 'flux-standard-action'
 // for async tests
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import promiseMiddleware from 'redux-promise'
 import nock from 'nock'
 
 describe('filterResources', () => {
@@ -31,7 +32,7 @@ describe('refreshResources', () => {
 
 
 describe('Asyncronous actions', () => {
-    const middlewares = [ thunk ]
+    const middlewares = [ thunk, promiseMiddleware ]
     const mockStore = configureMockStore(middlewares)
 
     afterEach(() => {
@@ -112,6 +113,27 @@ describe('Asyncronous actions', () => {
             return store.dispatch(actions.addResource(newResource))
                 .then(() => { // return of async actions
                     expect(store.getActions()).toEqual(expectedActions)
+                })
+
+
+        })
+    })
+
+    describe('addResourceFSA', () => {
+        it('creates CREATE_RESOURCE and executes fetch', () => {
+            const newResource = {prop1 : 'val1', prop2 : 'val2'}
+            const payload = 'prop1=val1&prop2=val2';
+            nock('http://localhost:8080')
+                .post('/infracc/resources', payload)
+                .reply(200, {})
+
+            const store = mockStore({ creator: {isFetching : false} })
+
+            return store.dispatch(actions.addResourceFSA(newResource))
+                .then(() => { // return of async actions
+                    expect(store.getActions()[0].type).toEqual(actions.CREATE_RESOURCE)
+                    expect(store.getActions()[0].error).toBeFalsy()
+                    expect(store.getActions()[0].payload.status).toEqual(200)
                 })
 
 

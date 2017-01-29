@@ -7,6 +7,7 @@ export const REFRESH_RESOURCES = 'REFRESH_RESOURCES';
 export const REQUEST_RESOURCES = 'REQUEST_RESOURCES';
 export const RECEIVE_RESOURCES = 'RECEIVE_RESOURCES';
 export const ERROR_RESOURCES = 'ERROR_RESOURCES';
+export const CREATE_RESOURCE = 'CREATE_RESOURCE';
 export const REQUEST_CREATE_RESOURCE = 'REQUEST_CREATE_RESOURCE';
 export const RECEIVE_CREATE_RESOURCE = 'RECEIVE_CREATE_RESOURCE';
 export const ERROR_CREATE_RESOURCE = 'ERROR_CREATE_RESOURCE';
@@ -94,6 +95,18 @@ export function fetchResourcesIfNeeded() {
         }
     }
 }
+
+function callCreateResource(resource) {
+    const payload = Object.keys(resource).reduce((acc, prop) =>  `${acc.length > 0 ? acc + '&' : ''}${prop}=${resource[prop]}`, '');
+    console.log('payload=' + payload)
+    return fetch(`http://localhost:8080/infracc/resources`,
+        {method: 'POST',
+            headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=utf-8'},
+            body: payload})
+}
+
+
+export const addResourceFSA = createAction('CREATE_RESOURCE', callCreateResource)
 
 export function addResource(resource) {
 
