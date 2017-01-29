@@ -4,6 +4,7 @@ import App from './App';
 import './index.css';
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
+import promiseMiddleware from 'redux-promise'
 import createLogger from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
 import app from './reducers'
@@ -13,6 +14,7 @@ const loggerMiddleware = createLogger()
 const store = createStore(app,
     applyMiddleware(
         thunkMiddleware, // lets us dispatch() functions
+        promiseMiddleware,
         loggerMiddleware // neat middleware that logs actions
     ))
 store.dispatch(fetchResourcesIfNeeded()).then(() =>
