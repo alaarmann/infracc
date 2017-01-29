@@ -3,7 +3,10 @@ import Messages from './Messages'
 
 const mapStateToProps = (state) => {
     return {
-        message: state.messages.errorMessage
+        message : Object.keys(state.messages).reduce((message, key) => {
+        const errorMessage =  state.messages[key].errorMessage
+        return `${message.length > 0 ? message + ' ' : ''}${errorMessage}`
+    }, '')
     }
 }
 
