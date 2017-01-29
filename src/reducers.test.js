@@ -1,5 +1,5 @@
-import { filter, resources, creator, messages } from './reducers'
-import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE } from './actions'
+import { filter, resources, creator, messages, pendingActions, actionMessages } from './reducers'
+import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE, CREATE_RESOURCE } from './actions'
 
 describe('filter reducer', () => {
     it('returns the initial state', () => {
@@ -298,4 +298,72 @@ describe('messages reducer', () => {
             errorMessage : 'An error message'
         })
     })
+})
+
+describe('pendingActions reducer', () => {
+    it('applies CREATE_RESOURCE on initial state', () => {
+        expect(
+            pendingActions(undefined, {
+                type : CREATE_RESOURCE,
+                payload : {}})
+        ).toEqual({})
+    })
+
+    it('applies CREATE_RESOURCE on previously modified state', () => {
+        const resultState = pendingActions({
+            CREATE_RESOURCE : {}
+    }, {
+            type: CREATE_RESOURCE,
+            payload : {}
+        })
+        expect(resultState).toEqual({})
+    })
+
+})
+
+describe('actionMessages reducer', () => {
+    const anErrorMessage = 'An error has occurred!'
+    const expectedFailureState = {
+        CREATE_RESOURCE : {errorMessage : anErrorMessage}
+    }
+    it('applies CREATE_RESOURCE (failure) on initial state', () => {
+        expect(
+            actionMessages(undefined, {
+                type : CREATE_RESOURCE,
+                payload : new Error(anErrorMessage),
+                error : true
+            })
+        ).toEqual(expectedFailureState)
+    })
+
+    it('applies CREATE_RESOURCE (failure) on previously modified state', () => {
+        const resultState = actionMessages({
+            CREATE_RESOURCE : {errorMessage : 'Any previous error'}
+        }, {
+            type: CREATE_RESOURCE,
+            payload : new Error(anErrorMessage),
+            error : true
+        })
+        expect(resultState).toEqual(expectedFailureState)
+    })
+
+    it('applies CREATE_RESOURCE (success) on initial state', () => {
+        expect(
+            actionMessages(undefined, {
+                type : CREATE_RESOURCE,
+                payload : {}
+            })
+        ).toEqual({})
+    })
+
+    it('applies CREATE_RESOURCE (failure) on previously modified state', () => {
+        const resultState = actionMessages({
+            CREATE_RESOURCE : {errorMessage : 'Any previous error'}
+        }, {
+            type: CREATE_RESOURCE,
+            payload : {}
+        })
+        expect(resultState).toEqual({})
+    })
+
 })
