@@ -3,6 +3,7 @@ import { createAction } from 'redux-actions'
 
 // Action types
 export const FILTER_RESOURCES = 'FILTER_RESOURCES';
+export const RETRIEVE_RESOURCES = 'RETRIEVE_RESOURCES';
 export const REFRESH_RESOURCES = 'REFRESH_RESOURCES';
 export const REQUEST_RESOURCES = 'REQUEST_RESOURCES';
 export const RECEIVE_RESOURCES = 'RECEIVE_RESOURCES';
@@ -106,32 +107,5 @@ function callCreateResource(resource) {
 }
 
 
-export const addResourceFSA = createAction('CREATE_RESOURCE', callCreateResource)
-
-export function addResource(resource) {
-
-    return function (dispatch) {
-
-        // First dispatch: the app state is updated to inform
-        // that the API call is starting.
-
-        dispatch(requestCreateResource())
-
-        // The function called by the thunk middleware can return a value,
-        // that is passed on as the return value of the dispatch method.
-
-        // In this case, we return a promise to wait for.
-        // This is not required by thunk middleware, but it is convenient for us.
-
-        const payload = Object.keys(resource).reduce((acc, prop) =>  `${acc.length > 0 ? acc + '&' : ''}${prop}=${resource[prop]}`, '');
-        console.log('payload=' + payload)
-        return fetch(`http://localhost:8080/infracc/resources`,
-            {method: 'POST',
-                headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=utf-8'},
-                body: payload})
-            .then(response => dispatch(receiveCreateResource()),
-                error => dispatch(handleCreateResourceError(error.message || 'An error occurred')))
-
-    }
-
-}
+export const addResource = createAction('CREATE_RESOURCE', callCreateResource)
+export const retrieveResourcesFSA = createAction('RETRIEVE_RESOURCES')

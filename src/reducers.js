@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { handleAction } from 'redux-actions'
-import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE, CREATE_RESOURCE } from './actions'
+import { handleAction, combineActions } from 'redux-actions'
+import { FILTER_RESOURCES, REFRESH_RESOURCES, RETRIEVE_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE, CREATE_RESOURCE } from './actions'
 
 export const filter = handleAction(FILTER_RESOURCES, (state, action) => action.payload || state, '')
 
@@ -59,21 +59,6 @@ export function creator(state = {
     }
 }
 
-export function messages(state = {
-    errorMessage: null
-}, action) {
-    switch (action.type) {
-        case ERROR_CREATE_RESOURCE:
-            return {...state,
-                errorMessage: action.errorMessage };
-        case ERROR_RESOURCES:
-            return {...state,
-                errorMessage: action.errorMessage };
-        default:
-            return state
-    }
-}
-
 const removeKeyFromImmutable = (immutableObject, keyToRemove) => Object.keys(immutableObject).reduce((obj, key) => {
         if (key !== keyToRemove) {
             return { ...obj, [key]: immutableObject[key] }
@@ -88,11 +73,11 @@ export const pendingActions = handleAction(CREATE_RESOURCE, {
     throw : (state, action) => removeKeyFromImmutable(state, action.type)
 }, {})
 
-export const actionMessages = handleAction(CREATE_RESOURCE, {
+export const messages = handleAction(combineActions(RETRIEVE_RESOURCES, CREATE_RESOURCE), {
     // success: remove message
     next : (state, action)  => removeKeyFromImmutable(state, action.type),
     // failure: add message
-    throw : (state, action) => ({...state, CREATE_RESOURCE : {errorMessage : action.payload.message}})
+    throw : (state, action) => ({...state, [action.type] : {errorMessage : action.payload.message}})
 }, {})
 
 const app = combineReducers({
@@ -101,7 +86,6 @@ const app = combineReducers({
     creator,
     messages,
     pendingActions,
-    actionMessages
 })
 
 export default app
