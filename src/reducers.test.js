@@ -356,7 +356,7 @@ describe('actionMessages reducer', () => {
         ).toEqual({})
     })
 
-    it('applies CREATE_RESOURCE (failure) on previously modified state', () => {
+    it('applies CREATE_RESOURCE (success) on previously modified state', () => {
         const resultState = actionMessages({
             CREATE_RESOURCE : {errorMessage : 'Any previous error'}
         }, {
