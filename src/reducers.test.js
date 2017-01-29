@@ -4,7 +4,7 @@ import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURC
 describe('filter reducer', () => {
     it('returns the initial state', () => {
         expect(
-            filter(undefined, {})
+            filter(undefined, {type : FILTER_RESOURCES, payload : undefined})
         ).toEqual('')
     })
 
@@ -12,7 +12,7 @@ describe('filter reducer', () => {
         expect(
             filter(undefined, {
                 type: FILTER_RESOURCES,
-                filterExpression: 'A filter expression'
+                payload: 'A filter expression'
             })
         ).toEqual('A filter expression')
     })
@@ -21,7 +21,7 @@ describe('filter reducer', () => {
         expect(
             filter('A previous expression', {
                 type: FILTER_RESOURCES,
-                filterExpression: 'A filter expression'
+                payload: 'A filter expression'
             })
         ).toEqual('A filter expression')
     })

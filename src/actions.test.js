@@ -1,18 +1,22 @@
 import * as actions from './actions'
-
+import { isFSA } from 'flux-standard-action'
 // for async tests
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
 
 describe('filterResources', () => {
-    it('should create an action to filter resources', () => {
+    it('creates an action to filter resources', () => {
         const filterExpression = 'anExpression'
         const expectedAction = {
             type: actions.FILTER_RESOURCES,
-            filterExpression
+            payload : filterExpression
         }
         expect(actions.filterResources(filterExpression)).toEqual(expectedAction)
+    })
+    it('is FSA compliant', () => {
+        expect(isFSA(actions.filterResources())).toBe(true)
+        expect(isFSA(actions.filterResources('anExpression'))).toBe(true)
     })
 })
 

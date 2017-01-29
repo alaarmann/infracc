@@ -5,6 +5,7 @@
   "private": true,
   "devDependencies": {
     "enzyme": "^2.7.1",
+    "flux-standard-action": "^1.1.0",
     "nock": "^9.0.2",
     "react-addons-test-utils": "^15.4.2",
     "react-scripts": "0.8.1",
@@ -16,6 +17,7 @@
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",
+    "redux-actions": "^1.2.1",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0"
   },

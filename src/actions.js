@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import { createAction } from 'redux-actions'
 
 // Action types
 export const FILTER_RESOURCES = 'FILTER_RESOURCES';
@@ -11,9 +12,7 @@ export const RECEIVE_CREATE_RESOURCE = 'RECEIVE_CREATE_RESOURCE';
 export const ERROR_CREATE_RESOURCE = 'ERROR_CREATE_RESOURCE';
 
 // Action creators
-export function filterResources(filterExpression) {
-  return { type: FILTER_RESOURCES, filterExpression };
-}
+export const filterResources = createAction(FILTER_RESOURCES)
 
 export function refreshResources() {
   return { type: REFRESH_RESOURCES };

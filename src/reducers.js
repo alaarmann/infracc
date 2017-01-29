@@ -1,14 +1,8 @@
 import { combineReducers } from 'redux'
+import { handleAction } from 'redux-actions'
 import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE } from './actions'
 
-export function filter(state = '', action) {
-  switch (action.type) {
-    case FILTER_RESOURCES:
-      return action.filterExpression
-    default:
-      return state
-  }
-}
+export const filter = handleAction(FILTER_RESOURCES, (state, action) => action.payload || state, '')
 
 export function resources(state = {
     isFetching: false,
