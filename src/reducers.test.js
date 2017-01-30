@@ -1,5 +1,5 @@
 import { filter, resources, creator, messages, pendingActions } from './reducers'
-import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE, CREATE_RESOURCE } from './actions'
+import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, CREATE_RESOURCE } from './actions'
 
 describe('filter reducer', () => {
     it('returns the initial state', () => {
@@ -152,95 +152,6 @@ describe('resources reducer', () => {
         }).toEqual({
             isFetching : false,
             needsRefresh : false
-        })
-    })
-
-    it('applies RECEIVE_CREATE_RESOURCE on initial state', () => {
-        const {needsRefresh} = resources(undefined, {
-            type: RECEIVE_CREATE_RESOURCE
-        })
-        expect(needsRefresh).toBe(true)
-    })
-
-    it('applies RECEIVE_CREATE_RESOURCE on previously modified state', () => {
-        const {needsRefresh} = resources({
-            isFetching: true,
-            needsRefresh: false,
-            items: []
-        }, {
-            type: RECEIVE_CREATE_RESOURCE
-        })
-        expect(needsRefresh).toBe(true)
-    })
-
-})
-
-describe('creator reducer', () => {
-    it('returns the initial state', () => {
-        expect(
-            creator(undefined, {})
-        ).toEqual({
-            isFetching: false
-        })
-    })
-
-    it('applies REQUEST_CREATE_RESOURCE on initial state', () => {
-        const resultState = creator(undefined, {
-            type: REQUEST_CREATE_RESOURCE
-        })
-        expect(resultState).toEqual({
-            isFetching: true
-        })
-    })
-
-    it('applies REQUEST_CREATE_RESOURCE on previously modified state', () => {
-        const resultState = creator({
-            isFetching: true
-        }, {
-            type: REQUEST_CREATE_RESOURCE
-        })
-        expect(resultState).toEqual({
-            isFetching: true
-        })
-    })
-
-    it('applies RECEIVE_CREATE_RESOURCE on initial state', () => {
-        const resultState = creator(undefined, {
-            type: RECEIVE_CREATE_RESOURCE
-        })
-        expect(resultState).toEqual({
-            isFetching: false
-        })
-    })
-
-    it('applies RECEIVE_CREATE_RESOURCE on previously modified state', () => {
-        const resultState = creator({
-            isFetching: true
-        }, {
-            type: RECEIVE_CREATE_RESOURCE
-        })
-        expect(resultState).toEqual({
-            isFetching: false
-        })
-    })
-
-    it('applies ERROR_CREATE_RESOURCE on initial state', () => {
-        const resultState = creator(undefined, {
-            type: ERROR_CREATE_RESOURCE
-        })
-        expect(resultState).toEqual({
-            isFetching: false
-        })
-    })
-
-    it('applies ERROR_CREATE_RESOURCE on previously modified state', () => {
-        const resultState = creator({
-            isFetching: true
-        }, {
-            type: ERROR_CREATE_RESOURCE
-        })
-        expect(resultState).toEqual({
-            isFetching: false
         })
     })
 

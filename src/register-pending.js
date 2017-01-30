@@ -1,13 +1,15 @@
-import { registerPending } from './actions'
 
-
-const registerPendingAsyncMiddleware = ({ dispatch, getState }) => next => action => {
-    if (action.payload && action.payload instanceof Promise){
-        console.log(`register ${action.type} as pending`, action)
-        dispatch(registerPending(action.type))
+const createRegisterPendingAsyncMiddleware = (callback) => {
+    return store => next => action => {
+        const {dispatch} = store
+        if (action.payload && action.payload instanceof Function) {
+            console.log(`register ${action.type} as pending`, action)
+            dispatch(callback(action.type))
+            action.payload = action.payload()
+        }
+        console.log('dispatching', action)
+        return next(action)
     }
-    console.log('dispatching', action)
-    return next(action)
 }
 
-export default registerPendingAsyncMiddleware
+export default createRegisterPendingAsyncMiddleware

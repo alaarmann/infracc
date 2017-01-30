@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { handleAction, handleActions, combineActions } from 'redux-actions'
-import { FILTER_RESOURCES, REFRESH_RESOURCES, RETRIEVE_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE, CREATE_RESOURCE, REGISTER_PENDING } from './actions'
+import { FILTER_RESOURCES, REFRESH_RESOURCES, RETRIEVE_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING } from './actions'
 
 export const filter = handleAction(FILTER_RESOURCES, (state, action) => action.payload || state, '')
 
@@ -32,32 +32,11 @@ export function resources(state = {
               needsRefresh: false
           }
 // TODO: set needsRefresh with CREATE_RESOURCE (success)
-      case RECEIVE_CREATE_RESOURCE:
-          return {...state,
-              needsRefresh: true };
 
 
       default:
       return state
   }
-}
-
-export function creator(state = {
-    isFetching: false
-}, action) {
-    switch (action.type) {
-        case REQUEST_CREATE_RESOURCE:
-            return {...state,
-                isFetching: true };
-        case RECEIVE_CREATE_RESOURCE:
-            return {...state,
-                isFetching: false };
-        case ERROR_CREATE_RESOURCE:
-            return {...state,
-                isFetching: false };
-        default:
-            return state
-    }
 }
 
 const addKeyToImmutable = (immutableObject, keyToAdd) => ({...immutableObject, keyToAdd : {}})
@@ -75,7 +54,7 @@ export const pendingActions = handleActions({
         next: (state, action) => removeKeyFromImmutable(state, action.type),
         throw: (state, action) => removeKeyFromImmutable(state, action.type)
     },
-    REGISTER_PENDING: (state, action) => addKeyToImmutable(state, action.payload)
+    REGISTER_PENDING: {next: (state, action) => addKeyToImmutable(state, action.payload)}
 }, {})
 
 export const messages = handleAction(combineActions(RETRIEVE_RESOURCES, CREATE_RESOURCE), {
@@ -88,7 +67,6 @@ export const messages = handleAction(combineActions(RETRIEVE_RESOURCES, CREATE_R
 const app = combineReducers({
     filter,
     resources,
-    creator,
     messages,
     pendingActions,
 })

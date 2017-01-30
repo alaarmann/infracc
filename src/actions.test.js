@@ -5,6 +5,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import promiseMiddleware from 'redux-promise'
 import nock from 'nock'
+import createRegisterPendingMiddleware from './register-pending'
 
 describe('filterResources', () => {
     it('creates an action to filter resources', () => {
@@ -32,7 +33,7 @@ describe('refreshResources', () => {
 
 
 describe('Asyncronous actions', () => {
-    const middlewares = [ thunk, promiseMiddleware ]
+    const middlewares = [ thunk, createRegisterPendingMiddleware(actions.registerPending), promiseMiddleware ]
     const mockStore = configureMockStore(middlewares)
 
     afterEach(() => {
@@ -108,9 +109,10 @@ describe('Asyncronous actions', () => {
 
             return store.dispatch(actions.addResource(newResource))
                 .then(() => { // return of async actions
-                    expect(store.getActions()[0].type).toEqual(actions.CREATE_RESOURCE)
-                    expect(store.getActions()[0].error).toBeFalsy()
-                    expect(store.getActions()[0].payload.status).toEqual(200)
+                    expect(store.getActions()[0].type).toEqual(actions.REGISTER_PENDING)
+                    expect(store.getActions()[1].type).toEqual(actions.CREATE_RESOURCE)
+                    expect(store.getActions()[1].error).toBeFalsy()
+                    expect(store.getActions()[1].payload.status).toEqual(200)
                 })
 
 

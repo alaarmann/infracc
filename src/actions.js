@@ -9,9 +9,6 @@ export const REQUEST_RESOURCES = 'REQUEST_RESOURCES';
 export const RECEIVE_RESOURCES = 'RECEIVE_RESOURCES';
 export const ERROR_RESOURCES = 'ERROR_RESOURCES';
 export const CREATE_RESOURCE = 'CREATE_RESOURCE';
-export const REQUEST_CREATE_RESOURCE = 'REQUEST_CREATE_RESOURCE';
-export const RECEIVE_CREATE_RESOURCE = 'RECEIVE_CREATE_RESOURCE';
-export const ERROR_CREATE_RESOURCE = 'ERROR_CREATE_RESOURCE';
 export const REGISTER_PENDING = 'REGISTER_PENDING';
 
 // Action creators
@@ -33,19 +30,6 @@ function receiveResources(resources) {
 
 function handleResourcesError(errorMessage) {
     return { type: ERROR_RESOURCES,
-        errorMessage };
-}
-
-function requestCreateResource() {
-    return { type: REQUEST_CREATE_RESOURCE };
-}
-
-function receiveCreateResource() {
-    return { type: RECEIVE_CREATE_RESOURCE };
-}
-
-function handleCreateResourceError(errorMessage) {
-    return { type: ERROR_CREATE_RESOURCE,
         errorMessage };
 }
 
@@ -98,17 +82,21 @@ export function fetchResourcesIfNeeded() {
     }
 }
 
-function callCreateResource(resource) {
-    const payload = Object.keys(resource).reduce((acc, prop) =>  `${acc.length > 0 ? acc + '&' : ''}${prop}=${resource[prop]}`, '');
-    console.log('payload=' + payload)
-    return fetch(`http://localhost:8080/infracc/resources`,
-        {method: 'POST',
-            headers: {'Content-Type' : 'application/x-www-form-urlencoded; charset=utf-8'},
-            body: payload})
+function createCallCreateResource(resource) {
+    return function () {
+        const payload = Object.keys(resource).reduce((acc, prop) => `${acc.length > 0 ? acc + '&' : ''}${prop}=${resource[prop]}`, '');
+        console.log('payload=' + payload)
+        return fetch(`http://localhost:8080/infracc/resources`,
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+                body: payload
+            })
+    }
 }
 
 
-export const addResource = createAction('CREATE_RESOURCE', callCreateResource)
+export const addResource = createAction('CREATE_RESOURCE', createCallCreateResource)
 export const retrieveResourcesFSA = createAction('RETRIEVE_RESOURCES')
 
 export const registerPending = createAction(REGISTER_PENDING)

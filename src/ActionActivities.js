@@ -4,6 +4,7 @@ import Activities from './Activities'
 
 const mapStateToProps = (state) => {
     return {
+        // TODO: map to pendingActions
         isCreateButtonDisabled : state.creator.isFetching,
         isRefreshButtonDisabled : state.resources.isFetching,
         lastUpdated : state.resources.lastUpdated
