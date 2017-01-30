@@ -9,11 +9,13 @@ import createLogger from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
 import app from './reducers'
 import { fetchResourcesIfNeeded } from './actions'
+import registerPendingMiddleware from './register-pending'
 
 const loggerMiddleware = createLogger()
 const store = createStore(app,
     applyMiddleware(
         thunkMiddleware, // lets us dispatch() functions
+        registerPendingMiddleware, // registers pending async actions
         promiseMiddleware,
         loggerMiddleware // neat middleware that logs actions
     ))

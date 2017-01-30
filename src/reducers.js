@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { handleAction, combineActions } from 'redux-actions'
-import { FILTER_RESOURCES, REFRESH_RESOURCES, RETRIEVE_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE, CREATE_RESOURCE } from './actions'
+import { handleAction, handleActions, combineActions } from 'redux-actions'
+import { FILTER_RESOURCES, REFRESH_RESOURCES, RETRIEVE_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, REQUEST_CREATE_RESOURCE, RECEIVE_CREATE_RESOURCE, ERROR_CREATE_RESOURCE, CREATE_RESOURCE, REGISTER_PENDING } from './actions'
 
 export const filter = handleAction(FILTER_RESOURCES, (state, action) => action.payload || state, '')
 
@@ -31,6 +31,7 @@ export function resources(state = {
               isFetching: false,
               needsRefresh: false
           }
+// TODO: set needsRefresh with CREATE_RESOURCE (success)
       case RECEIVE_CREATE_RESOURCE:
           return {...state,
               needsRefresh: true };
@@ -59,6 +60,8 @@ export function creator(state = {
     }
 }
 
+const addKeyToImmutable = (immutableObject, keyToAdd) => ({...immutableObject, keyToAdd : {}})
+
 const removeKeyFromImmutable = (immutableObject, keyToRemove) => Object.keys(immutableObject).reduce((obj, key) => {
         if (key !== keyToRemove) {
             return { ...obj, [key]: immutableObject[key] }
@@ -66,11 +69,13 @@ const removeKeyFromImmutable = (immutableObject, keyToRemove) => Object.keys(imm
         return obj
     }, {})
 
-
-// remove from pendingActions
-export const pendingActions = handleAction(CREATE_RESOURCE, {
-    next : (state, action) => removeKeyFromImmutable(state, action.type),
-    throw : (state, action) => removeKeyFromImmutable(state, action.type)
+// manage pendingActions
+export const pendingActions = handleActions({
+    CREATE_RESOURCE: {
+        next: (state, action) => removeKeyFromImmutable(state, action.type),
+        throw: (state, action) => removeKeyFromImmutable(state, action.type)
+    },
+    REGISTER_PENDING: (state, action) => addKeyToImmutable(state, action.payload)
 }, {})
 
 export const messages = handleAction(combineActions(RETRIEVE_RESOURCES, CREATE_RESOURCE), {

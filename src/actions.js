@@ -12,6 +12,7 @@ export const CREATE_RESOURCE = 'CREATE_RESOURCE';
 export const REQUEST_CREATE_RESOURCE = 'REQUEST_CREATE_RESOURCE';
 export const RECEIVE_CREATE_RESOURCE = 'RECEIVE_CREATE_RESOURCE';
 export const ERROR_CREATE_RESOURCE = 'ERROR_CREATE_RESOURCE';
+export const REGISTER_PENDING = 'REGISTER_PENDING';
 
 // Action creators
 export const filterResources = createAction(FILTER_RESOURCES)
@@ -109,3 +110,5 @@ function callCreateResource(resource) {
 
 export const addResource = createAction('CREATE_RESOURCE', callCreateResource)
 export const retrieveResourcesFSA = createAction('RETRIEVE_RESOURCES')
+
+export const registerPending = createAction(REGISTER_PENDING)
