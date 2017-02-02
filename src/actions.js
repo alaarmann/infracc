@@ -96,7 +96,7 @@ function createCallCreateResource(resource) {
 }
 
 
-export const addResource = createAction('CREATE_RESOURCE', createCallCreateResource)
-export const retrieveResourcesFSA = createAction('RETRIEVE_RESOURCES')
+export const addResource = createAction(CREATE_RESOURCE, createCallCreateResource)
+export const retrieveResourcesFSA = createAction(RETRIEVE_RESOURCES)
 
 export const registerPending = createAction(REGISTER_PENDING)
