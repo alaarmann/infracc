@@ -33,7 +33,7 @@ describe('refreshResources', () => {
 
 
 describe('Asyncronous actions', () => {
-    const middlewares = [ thunk, createRegisterPendingMiddleware(actions.registerPending), promiseMiddleware ]
+    const middlewares = [ thunk, createRegisterPendingMiddleware({dispatchBefore : actions.registerPending}), promiseMiddleware ]
     const mockStore = configureMockStore(middlewares)
 
     afterEach(() => {
