@@ -32,14 +32,14 @@ describe('registerPendingAsyncMiddleware', () => {
                 events.push('ASYNC_ACTION started')
                 setTimeout(() => {
                     events.push('ASYNC_ACTION successfully completed')
-                    return resolve(`Resolved: ${argument}`);
+                    resolve(`Resolved: ${argument}`);
                 }, 0)
             }
         ))
 
         const store = mockStore({})
 
-        store.dispatch(asyncAction('Very good argument!')).then(
+        return store.dispatch(asyncAction('Very good argument!')).then(
 
             () => {
 
@@ -56,7 +56,7 @@ describe('registerPendingAsyncMiddleware', () => {
                 expect(store.getActions()[0].type).toBe('REGISTER_PENDING')
                 expect(store.getActions()[1].type).toBe('ASYNC_ACTION')
                 expect(store.getActions()[2].type).toBe('DEREGISTER_PENDING')
-            })
+            }, () => { throw new Error()})
 
     })
 })

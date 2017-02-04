@@ -31,9 +31,28 @@ describe('refreshResources', () => {
     })
 })
 
+describe('registerPending', () => {
+    it('creates an action for registering pending state of an async action', () => {
+        const expectedAction = {
+            type: actions.REGISTER_PENDING
+        }
+        expect(actions.registerPending()).toEqual(expectedAction)
+        expect(isFSA(actions.registerPending())).toBe(true)
+    })
+})
+
+describe('deregisterPending', () => {
+    it('creates an action for deregistering an async action from pending state', () => {
+        const expectedAction = {
+            type: actions.DEREGISTER_PENDING
+        }
+        expect(actions.deregisterPending()).toEqual(expectedAction)
+        expect(isFSA(actions.deregisterPending())).toBe(true)
+    })
+})
 
 describe('Asyncronous actions', () => {
-    const middlewares = [ thunk, createRegisterPendingMiddleware({dispatchBefore : actions.registerPending}), promiseMiddleware ]
+    const middlewares = [ thunk, createRegisterPendingMiddleware({dispatchBefore : actions.registerPending, dispatchAfter : actions.deregisterPending}), promiseMiddleware ]
     const mockStore = configureMockStore(middlewares)
 
     afterEach(() => {
@@ -113,6 +132,7 @@ describe('Asyncronous actions', () => {
                     expect(store.getActions()[1].type).toEqual(actions.CREATE_RESOURCE)
                     expect(store.getActions()[1].error).toBeFalsy()
                     expect(store.getActions()[1].payload.status).toEqual(200)
+                    expect(store.getActions()[2].type).toEqual(actions.DEREGISTER_PENDING)
                 })
 
 
