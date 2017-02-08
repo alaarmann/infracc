@@ -29,9 +29,7 @@ describe('mapStateToProps', () => {
 
 
         const initialState = {
-        creator : {
-            isFetching: false,
-        },
+            pendingActions : {},
         resources: {
             isFetching: false,
             needsRefresh: true,
@@ -52,9 +50,7 @@ describe('mapStateToProps', () => {
         const receivedAt = new Date(2017, 1, 21, 22, 40, 52, 123)
 
         const initialState = {
-            creator : {
-                isFetching: true,
-            },
+            pendingActions : {CREATE_RESOURCE : {}},
             resources: {
                 isFetching: true,
                 needsRefresh: false,
@@ -79,9 +75,7 @@ describe('mapDispatchToProps', () => {
 
 
         const initialState = {
-            creator : {
-                isFetching: false,
-            },
+            pendingActions : {},
             resources: {
                 isFetching: false,
                 needsRefresh: true,
@@ -105,9 +99,7 @@ describe('mapDispatchToProps', () => {
 
 
         const initialState = {
-            creator : {
-                isFetching: false,
-            },
+            pendingActions : {},
             resources: {
                 isFetching: false,
                 needsRefresh: true,

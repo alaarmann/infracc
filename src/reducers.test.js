@@ -1,5 +1,5 @@
 import { filter, resources, creator, messages, pendingActions } from './reducers'
-import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, CREATE_RESOURCE } from './actions'
+import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING } from './actions'
 
 describe('filter reducer', () => {
     it('returns the initial state', () => {
@@ -158,24 +158,23 @@ describe('resources reducer', () => {
 })
 
 describe('pendingActions reducer', () => {
-    it('applies CREATE_RESOURCE on initial state', () => {
-        expect(
-            pendingActions(undefined, {
-                type : CREATE_RESOURCE,
-                payload : {}})
-        ).toEqual({})
-    })
-
-    it('applies CREATE_RESOURCE on previously modified state', () => {
+    it('applies DEREGISTER_PENDING on previously modified state', () => {
         const resultState = pendingActions({
             CREATE_RESOURCE : {}
     }, {
-            type: CREATE_RESOURCE,
-            payload : {}
+            type: DEREGISTER_PENDING,
+            payload : CREATE_RESOURCE
         })
         expect(resultState).toEqual({})
     })
 
+    it('applies REGISTER_PENDING on initial state', () => {
+        expect(
+            pendingActions(undefined, {
+                type : REGISTER_PENDING,
+                payload : CREATE_RESOURCE})
+        ).toEqual({CREATE_RESOURCE : {}})
+    })
 })
 
 describe('messages reducer', () => {

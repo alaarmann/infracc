@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import { addResource, refreshResources, fetchResourcesIfNeeded } from './actions'
+import { addResource, refreshResources, fetchResourcesIfNeeded, CREATE_RESOURCE } from './actions'
 import Activities from './Activities'
 
 const mapStateToProps = (state) => {
     return {
         // TODO: map to pendingActions
-        isCreateButtonDisabled : state.creator.isFetching,
+        isCreateButtonDisabled : CREATE_RESOURCE in state.pendingActions,
         isRefreshButtonDisabled : state.resources.isFetching,
         lastUpdated : state.resources.lastUpdated
     }

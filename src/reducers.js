@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { handleAction, handleActions, combineActions } from 'redux-actions'
-import { FILTER_RESOURCES, REFRESH_RESOURCES, RETRIEVE_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING } from './actions'
+import { FILTER_RESOURCES, REFRESH_RESOURCES, RETRIEVE_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING } from './actions'
 
 export const filter = handleAction(FILTER_RESOURCES, (state, action) => action.payload || state, '')
 
@@ -39,7 +39,7 @@ export function resources(state = {
   }
 }
 
-const addKeyToImmutable = (immutableObject, keyToAdd) => ({...immutableObject, keyToAdd : {}})
+const addKeyToImmutable = (immutableObject, keyToAdd) => ({...immutableObject, [keyToAdd] : {}})
 
 const removeKeyFromImmutable = (immutableObject, keyToRemove) => Object.keys(immutableObject).reduce((obj, key) => {
         if (key !== keyToRemove) {
@@ -50,11 +50,8 @@ const removeKeyFromImmutable = (immutableObject, keyToRemove) => Object.keys(imm
 
 // manage pendingActions
 export const pendingActions = handleActions({
-    CREATE_RESOURCE: {
-        next: (state, action) => removeKeyFromImmutable(state, action.type),
-        throw: (state, action) => removeKeyFromImmutable(state, action.type)
-    },
-    REGISTER_PENDING: {next: (state, action) => addKeyToImmutable(state, action.payload)}
+    REGISTER_PENDING: {next: (state, action) => addKeyToImmutable(state, action.payload)},
+    DEREGISTER_PENDING: {next: (state, action) => removeKeyFromImmutable(state, action.payload)}
 }, {})
 
 export const messages = handleAction(combineActions(RETRIEVE_RESOURCES, CREATE_RESOURCE), {
