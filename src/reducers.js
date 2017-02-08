@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { handleAction, handleActions, combineActions } from 'redux-actions'
 import { FILTER_RESOURCES, REFRESH_RESOURCES, RETRIEVE_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING } from './actions'
 
-export const filter = handleAction(FILTER_RESOURCES, (state, action) => action.payload || state, '')
+export const filter = handleAction(FILTER_RESOURCES, (state, action) => (typeof action.payload !== 'undefined') ? action.payload : state, '')
 
 export function resources(state = {
     isFetching: false,

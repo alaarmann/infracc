@@ -25,6 +25,15 @@ describe('filter reducer', () => {
             })
         ).toEqual('A filter expression')
     })
+
+    it('applies FILTER_RESOURCES with empty payload on previously modified state', () => {
+        expect(
+            filter('A previous expression', {
+                type: FILTER_RESOURCES,
+                payload: ''
+            })
+        ).toEqual('')
+    })
 })
 
 describe('resources reducer', () => {
