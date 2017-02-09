@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addResource, refreshResources, fetchResourcesIfNeeded, CREATE_RESOURCE } from './actions'
+import { addResource, fetchResourcesIfNeeded, CREATE_RESOURCE } from './actions'
 import Activities from './Activities'
 
 const mapStateToProps = (state) => {
@@ -18,7 +18,6 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(fetchResourcesIfNeeded())
         },
         onRefreshButtonClick: () => {
-            dispatch(refreshResources())
             dispatch(fetchResourcesIfNeeded())
         }
     }

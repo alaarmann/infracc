@@ -15,10 +15,6 @@ export const DEREGISTER_PENDING = 'DEREGISTER_PENDING';
 // Action creators
 export const filterResources = createAction(FILTER_RESOURCES)
 
-export function refreshResources() {
-  return { type: REFRESH_RESOURCES };
-}
-
 function requestResources() {
   return { type: REQUEST_RESOURCES };
 }
@@ -98,7 +94,7 @@ const createCallCreateResource = function (resource) {
 
 
 export const addResource = createAction(CREATE_RESOURCE, createCallCreateResource)
-export const retrieveResourcesFSA = createAction(RETRIEVE_RESOURCES)
+export const retrieveResources = createAction(RETRIEVE_RESOURCES)
 
 export const registerPending = createAction(REGISTER_PENDING)
 export const deregisterPending = createAction(DEREGISTER_PENDING)

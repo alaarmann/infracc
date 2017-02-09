@@ -22,15 +22,6 @@ describe('filterResources', () => {
     })
 })
 
-describe('refreshResources', () => {
-    it('should create an action to refresh resources', () => {
-        const expectedAction = {
-            type: actions.REFRESH_RESOURCES
-        }
-        expect(actions.refreshResources()).toEqual(expectedAction)
-    })
-})
-
 describe('registerPending', () => {
     it('creates an action for registering pending state of an async action', () => {
         const expectedAction = {

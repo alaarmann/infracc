@@ -113,7 +113,7 @@ describe('mapDispatchToProps', () => {
         expect(onRefreshButtonClick).toBeInstanceOf(Function)
         onRefreshButtonClick();
         // no test for actions triggered
-        expect(dispatch).toHaveBeenCalledTimes(2)
+        expect(dispatch).toHaveBeenCalledTimes(1)
         expect(store.getActions().length).toBe(0)
 
     });
