@@ -5,11 +5,15 @@ import { mount } from 'enzyme';
 import ActionActivities from './ActionActivities'
 import Activities from './Activities'
 import * as actions from './actions'
+import thunk from 'redux-thunk'
+import promiseMiddleware from 'redux-promise'
+import createRegisterPendingMiddleware from './register-pending'
 
 function setup(state) {
-    const mockStore = configureMockStore()
-    const dispatch = jest.fn()
+    const middlewares = [ thunk, createRegisterPendingMiddleware({dispatchBefore : actions.registerPending, dispatchAfter : actions.deregisterPending}), promiseMiddleware ]
+    const mockStore = configureMockStore(middlewares)
     const store = mockStore(state)
+    const dispatch = jest.fn(store.dispatch)
     store.dispatch = dispatch
     const enzymeWrapper = mount(<Provider store={store}>
         <ActionActivities />
@@ -74,8 +78,6 @@ describe('mapDispatchToProps', () => {
         const initialState = {
             pendingActions : {},
             resources: {
-                isFetching: false,
-                needsRefresh: true,
                 items: []
             }
         }
@@ -86,9 +88,9 @@ describe('mapDispatchToProps', () => {
         const onCreateButtonClick = componentWrapper.prop('onCreateButtonClick')
         expect(onCreateButtonClick).toBeInstanceOf(Function)
         onCreateButtonClick('aNewResource');
-        // no test for actions triggered
+        // no test for particular actions triggered, just make sure any action has been triggered
         expect(dispatch).toHaveBeenCalledTimes(2)
-        expect(store.getActions().length).toBe(0)
+        expect(store.getActions().length).toBeGreaterThan(0)
 
     });
 
@@ -98,8 +100,6 @@ describe('mapDispatchToProps', () => {
         const initialState = {
             pendingActions : {},
             resources: {
-                isFetching: false,
-                needsRefresh: true,
                 items: []
             }
         }
@@ -110,9 +110,9 @@ describe('mapDispatchToProps', () => {
         const onRefreshButtonClick = componentWrapper.prop('onRefreshButtonClick')
         expect(onRefreshButtonClick).toBeInstanceOf(Function)
         onRefreshButtonClick();
-        // no test for actions triggered
+        // no test for particular actions triggered, just make sure any action has been triggered
         expect(dispatch).toHaveBeenCalledTimes(1)
-        expect(store.getActions().length).toBe(0)
+        expect(store.getActions().length).toBeGreaterThan(0)
 
     });
 
