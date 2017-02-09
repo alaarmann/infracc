@@ -26,8 +26,8 @@ const removeKeyFromImmutable = (immutableObject, keyToRemove) => Object.keys(imm
 
 // manage pendingActions
 export const pendingActions = handleActions({
-    REGISTER_PENDING: {next: (state, action) => addKeyToImmutable(state, action.payload)},
-    DEREGISTER_PENDING: {next: (state, action) => removeKeyFromImmutable(state, action.payload)}
+    [REGISTER_PENDING]: {next: (state, action) => addKeyToImmutable(state, action.payload)},
+    [DEREGISTER_PENDING]: {next: (state, action) => removeKeyFromImmutable(state, action.payload)}
 }, {})
 
 export const messages = handleAction(combineActions(RETRIEVE_RESOURCES, CREATE_RESOURCE), {
