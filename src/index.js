@@ -8,7 +8,7 @@ import promiseMiddleware from 'redux-promise'
 import createLogger from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
 import app from './reducers'
-import { fetchResourcesIfNeeded, registerPending, deregisterPending } from './actions'
+import { retrieveResources, registerPending, deregisterPending } from './actions'
 import createRegisterPendingMiddleware from './register-pending'
 
 const loggerMiddleware = createLogger()
@@ -19,7 +19,7 @@ const store = createStore(app,
         promiseMiddleware,
         loggerMiddleware // neat middleware that logs actions
     ))
-store.dispatch(fetchResourcesIfNeeded()).then(() =>
+store.dispatch(retrieveResources()).then(() =>
     console.log(store.getState())
 )
 ReactDOM.render(

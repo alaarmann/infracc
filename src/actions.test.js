@@ -50,57 +50,32 @@ describe('Asyncronous actions', () => {
         nock.cleanAll()
     })
 
-    describe('fetchResourcesIfNeeded', () => {
+    describe('retrieveResources', () => {
 
-        describe('needsFetch is true', () => {
-            it('should create REQUEST_RESOURCES, execute fetch and create action RECEIVE_RESOURCES', () => {
-                const resourcesPayload = '[{"_id":"587fdfbb9a20f21027a5b96f","key":"My latest Resource","__v":0},{"_id":"587fdfcb9a20f21027a5b970","key":"Another Resource","__v":0}]'
-                nock('http://localhost:8080')
-                    .get('/infracc/resources')
-                    .reply(200, resourcesPayload)
-
-                const initialState = {
-                    resources: {
-                        isFetching: false,
-                        needsRefresh: true,
-                        items: []
-                    }
-                }
-
-                const store = mockStore(initialState)
-
-                return store.dispatch(actions.fetchResourcesIfNeeded())
-                    .then(() => { // return of async actions
-                        // mockStore offers triggered actions via getActions()
-                        expect(store.getActions()[0]).toEqual({type: actions.REQUEST_RESOURCES})
-                        expect(store.getActions()[1].receivedAt).toBeDefined
-                        expect(store.getActions()[1].type).toBe(actions.RECEIVE_RESOURCES)
-                        expect(store.getActions()[1].resources).toEqual(JSON.parse(resourcesPayload))
-
-                    })
-
-
-            })
-        })
-    })
-
-    describe('needsFetch is false', () => {
-        it('should not create any action', () => {
+        it('creates RETRIEVE_RESOURCES and executes fetch', () => {
+            const resourcesPayload = '[{"_id":"587fdfbb9a20f21027a5b96f","key":"My latest Resource","__v":0},{"_id":"587fdfcb9a20f21027a5b970","key":"Another Resource","__v":0}]'
+            nock('http://localhost:8080')
+                .get('/infracc/resources')
+                .reply(200, resourcesPayload)
 
             const initialState = {
                 resources: {
-                    isFetching: false,
-                    needsRefresh: false,
                     items: []
                 }
             }
 
             const store = mockStore(initialState)
 
-            return store.dispatch(actions.fetchResourcesIfNeeded())
+            return store.dispatch(actions.retrieveResources())
                 .then(() => { // return of async actions
                     // mockStore offers triggered actions via getActions()
-                    expect(store.getActions().length).toBe(0)
+                    expect(store.getActions()[0]).toEqual({type: actions.REGISTER_PENDING, payload : actions.RETRIEVE_RESOURCES})
+                    expect(store.getActions()[1].type).toEqual(actions.RETRIEVE_RESOURCES)
+                    expect(store.getActions()[1].error).notToBeDefined
+                    expect(store.getActions()[1].payload.receivedAt).toBeDefined
+                    expect(store.getActions()[1].payload.resources).toEqual(JSON.parse(resourcesPayload))
+                    expect(store.getActions()[2]).toEqual({type: actions.DEREGISTER_PENDING, payload : actions.RETRIEVE_RESOURCES})
+
                 })
 
 

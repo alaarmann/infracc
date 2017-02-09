@@ -1,5 +1,5 @@
-import { filter, resources, creator, messages, pendingActions } from './reducers'
-import { FILTER_RESOURCES, REFRESH_RESOURCES, REQUEST_RESOURCES, RECEIVE_RESOURCES, ERROR_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING } from './actions'
+import { filter, resources, messages, pendingActions } from './reducers'
+import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING } from './actions'
 
 describe('filter reducer', () => {
     it('returns the initial state', () => {
@@ -39,130 +39,51 @@ describe('filter reducer', () => {
 describe('resources reducer', () => {
     it('returns the initial state', () => {
         expect(
-            resources(undefined, {})
+            resources(undefined, {type : 'NO_DEFINED_ACTION'})
         ).toEqual({
-            isFetching: false,
-            needsRefresh: true,
-            items: []
+            items: [],
+            lastUpdated : null
         })
     })
 
-    it('applies REFRESH_RESOURCES on initial state', () => {
-        const { needsRefresh} = resources(undefined, {
-            type: REFRESH_RESOURCES
-        })
-        expect(needsRefresh).toBe(true)
-    })
-
-    it('applies REFRESH_RESOURCES on previously modified state', () => {
-        const { needsRefresh} = resources({
-            isFetching: false,
-            needsRefresh: false,
-            items: []
-        }, {
-            type: REFRESH_RESOURCES
-        })
-        expect(needsRefresh).toBe(true)
-    })
-
-    it('applies REQUEST_RESOURCES on initial state', () => {
-        const { isFetching, needsRefresh} = resources(undefined, {
-            type: REQUEST_RESOURCES
-        })
-        expect({
-            isFetching,
-            needsRefresh
-        }).toEqual({
-            isFetching : true,
-            needsRefresh : false
-        })
-    })
-
-    it('applies REQUEST_RESOURCES on previously modified state', () => {
-        const { isFetching, needsRefresh} = resources({
-            isFetching: true,
-            needsRefresh: false,
-            items: []
-        }, {
-            type: REQUEST_RESOURCES
-        })
-        expect({
-            isFetching,
-            needsRefresh
-        }).toEqual({
-            isFetching : true,
-            needsRefresh : false
-        })
-    })
-
-    it('applies RECEIVE_RESOURCES on initial state', () => {
+    it('applies RETRIEVE_RESOURCES on initial state', () => {
         const receivedResources = [{"_id":"587fdfbb9a20f21027a5b96f","key":"My latest Resource","__v":0},{"_id":"587fdfcb9a20f21027a5b970","key":"Another Resource","__v":0}]
         const receivedAt = new Date(2017, 1, 21, 22, 40, 52, 123)
 
         const resultState = resources(undefined, {
-            type: RECEIVE_RESOURCES,
-            resources : receivedResources,
-            receivedAt : receivedAt
+            type: RETRIEVE_RESOURCES,
+            payload : {
+                resources: receivedResources,
+                receivedAt: receivedAt
+            }
         })
         expect(resultState).toEqual({
-            isFetching: false,
-            needsRefresh: false,
             items: receivedResources,
             lastUpdated: receivedAt
         })
     })
 
-    it('applies RECEIVE_RESOURCES on previously modified state', () => {
+    it('applies RETRIEVE_RESOURCES on previously modified state', () => {
         const receivedResources = [{"_id":"587fdfbb9a20f21027a5b96f","key":"My latest Resource","__v":0},{"_id":"587fdfcb9a20f21027a5b970","key":"Another Resource","__v":0}]
         const receivedAt = new Date(2017, 1, 21, 22, 40, 52, 123)
 
         const resultState = resources({
-            isFetching: false,
-            needsRefresh: false,
             items: [{"_id":"587fdfbb9a20f21027a5b96f","key":"My latest Resource","__v":0}],
             lastUpdated: new Date(2017, 1, 1, 19, 4, 25, 321)
         }, {
-            type: RECEIVE_RESOURCES,
-            resources : receivedResources,
-            receivedAt : receivedAt
+            type: RETRIEVE_RESOURCES,
+            payload : {
+                resources: receivedResources,
+                receivedAt: receivedAt
+            }
         })
         expect(resultState).toEqual({
-            isFetching: false,
-            needsRefresh: false,
             items: receivedResources,
             lastUpdated: receivedAt
         })
     })
 
-    it('applies ERROR_RESOURCES on initial state', () => {
-        const { isFetching, needsRefresh} = resources(undefined, {
-            type: ERROR_RESOURCES
-        })
-        expect({
-            isFetching,
-            needsRefresh
-        }).toEqual({
-            isFetching : false,
-            needsRefresh : false
-        })
-    })
-
-    it('applies ERROR_RESOURCES on previously modified state', () => {
-        const { isFetching, needsRefresh} = resources({
-            isFetching: true,
-            needsRefresh: false,
-            items: []
-        }, {
-            type: ERROR_RESOURCES
-        })
-        expect({
-            isFetching,
-            needsRefresh
-        }).toEqual({
-            isFetching : false,
-            needsRefresh : false
-        })
-    })
+    // TODO: test error condition
 
 })
 

@@ -50,10 +50,8 @@ describe('mapStateToProps', () => {
         const receivedAt = new Date(2017, 1, 21, 22, 40, 52, 123)
 
         const initialState = {
-            pendingActions : {CREATE_RESOURCE : {}},
+            pendingActions : {[actions.CREATE_RESOURCE] : {}, [actions.RETRIEVE_RESOURCES] : {}},
             resources: {
-                isFetching: true,
-                needsRefresh: false,
                 items: [],
                 lastUpdated : receivedAt
             }

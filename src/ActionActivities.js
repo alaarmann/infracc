@@ -1,12 +1,11 @@
 import { connect } from 'react-redux'
-import { addResource, fetchResourcesIfNeeded, CREATE_RESOURCE } from './actions'
+import { addResource, retrieveResources, CREATE_RESOURCE, RETRIEVE_RESOURCES } from './actions'
 import Activities from './Activities'
 
 const mapStateToProps = (state) => {
     return {
-        // TODO: map to pendingActions
         isCreateButtonDisabled : CREATE_RESOURCE in state.pendingActions,
-        isRefreshButtonDisabled : state.resources.isFetching,
+        isRefreshButtonDisabled : RETRIEVE_RESOURCES in state.pendingActions,
         lastUpdated : state.resources.lastUpdated
     }
 }
@@ -15,10 +14,11 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onCreateButtonClick: (resourceKey) => {
             dispatch(addResource({'key' : resourceKey}))
-            dispatch(fetchResourcesIfNeeded())
+            // TODO: only if successful (.then()?)
+            dispatch(retrieveResources())
         },
         onRefreshButtonClick: () => {
-            dispatch(fetchResourcesIfNeeded())
+            dispatch(retrieveResources())
         }
     }
 }

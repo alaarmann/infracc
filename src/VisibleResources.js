@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 import Resources from './Resources'
+import {RETRIEVE_RESOURCES} from './actions'
 
 const mapStateToProps = (state) => {
     return {
         resources: state.resources.items.filter(res => res.key.indexOf(state.filter) >= 0),
-        isFetching : state.resources.isFetching,
+        isFetching : RETRIEVE_RESOURCES in state.pendingActions,
         lastUpdated : state.resources.lastUpdated
     }
 }
