@@ -70,7 +70,6 @@ describe('mapStateToProps', () => {
 
 describe('mapDispatchToProps', () => {
 
-    // TODO: fix real API Call (on create action), failing
     it('maps onCreateButtonClick', () => {
 
 
