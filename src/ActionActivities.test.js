@@ -87,11 +87,13 @@ describe('mapDispatchToProps', () => {
         const componentWrapper = enzymeWrapper.find(Activities)
         const onCreateButtonClick = componentWrapper.prop('onCreateButtonClick')
         expect(onCreateButtonClick).toBeInstanceOf(Function)
-        onCreateButtonClick('aNewResource');
-        // no test for particular actions triggered, just make sure any action has been triggered
-        expect(dispatch).toHaveBeenCalledTimes(2)
-        expect(store.getActions().length).toBeGreaterThan(0)
-
+        return onCreateButtonClick('aNewResource').then(
+            () => {
+                // no test for particular actions triggered, just make sure any action has been triggered
+                expect(dispatch).toHaveBeenCalledTimes(2)
+                expect(store.getActions().length).toBeGreaterThan(0)
+            }
+        )
     });
 
     it('maps onRefreshButtonClick', () => {
@@ -109,10 +111,13 @@ describe('mapDispatchToProps', () => {
         const componentWrapper = enzymeWrapper.find(Activities)
         const onRefreshButtonClick = componentWrapper.prop('onRefreshButtonClick')
         expect(onRefreshButtonClick).toBeInstanceOf(Function)
-        onRefreshButtonClick();
-        // no test for particular actions triggered, just make sure any action has been triggered
-        expect(dispatch).toHaveBeenCalledTimes(1)
-        expect(store.getActions().length).toBeGreaterThan(0)
+        return onRefreshButtonClick().then(
+            () => {
+                // no test for particular actions triggered, just make sure any action has been triggered
+                expect(dispatch).toHaveBeenCalledTimes(1)
+                expect(store.getActions().length).toBeGreaterThan(0)
+            }
+        )
 
     });
 

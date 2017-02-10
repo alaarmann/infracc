@@ -12,16 +12,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onCreateButtonClick: (resourceKey) => {
+        onCreateButtonClick: (resourceKey) =>
             dispatch(addResource({'key' : resourceKey})).then(
-                // TODO: why is this not sequencing (retrieveResources after successful addResource)?
                 // TODO: avoid dispatch in error condition
-                dispatch(retrieveResources())
-            )
-        },
-        onRefreshButtonClick: () => {
-            dispatch(retrieveResources())
-        }
+                () => dispatch(retrieveResources())
+            ),
+        onRefreshButtonClick: () => dispatch(retrieveResources())
     }
 }
 
