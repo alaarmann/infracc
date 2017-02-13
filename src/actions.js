@@ -43,5 +43,5 @@ export const retrieveResources = createAction(RETRIEVE_RESOURCES, createCallRetr
 export const registerPending = createAction(REGISTER_PENDING)
 export const deregisterPending = createAction(DEREGISTER_PENDING)
 
-export const closeResourcEditor = createAction(CLOSE_RESOURCE_EDITOR)
-export const openResourcEditor = createAction(OPEN_RESOURCE_EDITOR)
+export const closeResourceEditor = createAction(CLOSE_RESOURCE_EDITOR)
+export const openResourceEditor = createAction(OPEN_RESOURCE_EDITOR)

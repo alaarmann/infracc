@@ -13,7 +13,7 @@ function setup(state) {
     const middlewares = [ thunk, createRegisterPendingMiddleware({dispatchBefore : actions.registerPending, dispatchAfter : actions.deregisterPending}), promiseMiddleware ]
     const mockStore = configureMockStore(middlewares)
     const store = mockStore(state)
-    const dispatch = jest.fn(store.dispatch)
+    const dispatch = jest.fn()
     store.dispatch = dispatch
     const enzymeWrapper = mount(<Provider store={store}>
         <ActionActivities />
@@ -87,13 +87,9 @@ describe('mapDispatchToProps', () => {
         const componentWrapper = enzymeWrapper.find(Activities)
         const onCreateButtonClick = componentWrapper.prop('onCreateButtonClick')
         expect(onCreateButtonClick).toBeInstanceOf(Function)
-        return onCreateButtonClick('aNewResource').then(
-            () => {
-                // no test for particular actions triggered, just make sure any action has been triggered
-                expect(dispatch).toHaveBeenCalledTimes(2)
-                expect(store.getActions().length).toBeGreaterThan(0)
-            }
-        )
+        onCreateButtonClick()
+        expect(dispatch).toHaveBeenCalledTimes(1)
+        expect(dispatch).toHaveBeenCalledWith({type: actions.OPEN_RESOURCE_EDITOR})
     });
 
     it('maps onRefreshButtonClick', () => {
@@ -111,14 +107,9 @@ describe('mapDispatchToProps', () => {
         const componentWrapper = enzymeWrapper.find(Activities)
         const onRefreshButtonClick = componentWrapper.prop('onRefreshButtonClick')
         expect(onRefreshButtonClick).toBeInstanceOf(Function)
-        return onRefreshButtonClick().then(
-            () => {
-                // no test for particular actions triggered, just make sure any action has been triggered
-                expect(dispatch).toHaveBeenCalledTimes(1)
-                expect(store.getActions().length).toBeGreaterThan(0)
-            }
-        )
-
+        onRefreshButtonClick()
+        expect(dispatch).toHaveBeenCalledTimes(1)
+        expect(dispatch.mock.calls[0][0].type).toBe(actions.RETRIEVE_RESOURCES)
     });
 
 });
