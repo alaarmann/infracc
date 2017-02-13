@@ -17,9 +17,9 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const ActionActivities = connect(
+const ActivitiesConnector = connect(
     mapStateToProps,
     mapDispatchToProps
 )(Activities)
 
-export default ActionActivities
+export default ActivitiesConnector

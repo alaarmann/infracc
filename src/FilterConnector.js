@@ -10,9 +10,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ActionFilter = connect(
+const FilterConnector = connect(
   null,
   mapDispatchToProps
 )(Filter)
 
-export default ActionFilter
+export default FilterConnector

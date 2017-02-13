@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 import { mount } from 'enzyme';
-import ActionActivities from './ActionActivities'
+import ActivitiesConnector from './ActivitiesConnector'
 import Activities from './Activities'
 import * as actions from './actions'
 import thunk from 'redux-thunk'
@@ -16,7 +16,7 @@ function setup(state) {
     const dispatch = jest.fn()
     store.dispatch = dispatch
     const enzymeWrapper = mount(<Provider store={store}>
-        <ActionActivities />
+        <ActivitiesConnector />
     </Provider>)
 
     return {
