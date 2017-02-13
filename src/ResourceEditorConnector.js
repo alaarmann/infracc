@@ -18,6 +18,8 @@ const mapDispatchToProps = (dispatch) => {
             () => dispatch(retrieveResources())
         )
         // TODO: refresh overview after successful creation only
+        // TODO: prevent popup from closing while creation is in pending state
+        // TODO: reconfirm when closing with unsaved changes
     }
 }
 
