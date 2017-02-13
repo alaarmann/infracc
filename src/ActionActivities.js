@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addResource, retrieveResources, CREATE_RESOURCE, RETRIEVE_RESOURCES } from './actions'
+import { addResource, retrieveResources, CREATE_RESOURCE, RETRIEVE_RESOURCES, openResourcEditor } from './actions'
 import Activities from './Activities'
 
 const mapStateToProps = (state) => {
@@ -12,11 +12,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onCreateButtonClick: (resourceKey) =>
-            dispatch(addResource({'key' : resourceKey})).then(
-                // TODO: avoid dispatch in error condition
-                () => dispatch(retrieveResources())
-            ),
+        onCreateButtonClick: () => dispatch(openResourcEditor()),
+
+            // (resourceKey) =>
+            // dispatch(addResource({'key' : resourceKey})).then(
+            //     // TODO: avoid dispatch in error condition
+            //     () => dispatch(retrieveResources())
+            // ),
         onRefreshButtonClick: () => dispatch(retrieveResources())
     }
 }

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { handleAction, handleActions, combineActions } from 'redux-actions'
-import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING } from './actions'
+import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING, OPEN_RESOURCE_EDITOR, CLOSE_RESOURCE_EDITOR } from './actions'
 
 export const filter = handleAction(FILTER_RESOURCES, (state, action) => (typeof action.payload !== 'undefined') ? action.payload : state, '')
 
@@ -37,11 +37,17 @@ export const messages = handleAction(combineActions(RETRIEVE_RESOURCES, CREATE_R
     throw : (state, action) => ({...state, [action.type] : {errorMessage : action.payload.message}})
 }, {})
 
+export const isResourceEditorOpen = handleActions({
+    [CLOSE_RESOURCE_EDITOR] : {next : (state, action) => false},
+    [OPEN_RESOURCE_EDITOR] : {next : (state, action) => true},
+}, false)
+
 const app = combineReducers({
     filter,
     resources,
     messages,
     pendingActions,
+    isResourceEditorOpen
 })
 
 export default app

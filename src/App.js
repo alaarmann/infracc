@@ -3,6 +3,7 @@ import ActionFilter from './ActionFilter';
 import ActionActivities from './ActionActivities';
 import VisibleResources from './VisibleResources';
 import MessagesContainer from './MessagesContainer';
+import ResourceEditorConnector from './ResourceEditorConnector';
 import './App.css';
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
         <ActionActivities/>
 	<VisibleResources/>
           <MessagesContainer/>
+          <ResourceEditorConnector/>
       </div>
     );
   }
