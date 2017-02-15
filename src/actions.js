@@ -22,7 +22,13 @@ const createCallCreateResource = function (resource) {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
                 body: payload
-            })
+            }).then((response) => {
+            if (response.ok) {
+                return response
+            } else {
+                throw new Error('Resource creation has failed!')
+            }
+        })
     }
 }
 
