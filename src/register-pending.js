@@ -10,10 +10,13 @@ const createRegisterPendingAsyncMiddleware = ({dispatchBefore, dispatchAfter}) =
             action.payload = action.payload()
             console.log('dispatching async', action)
             const result =  next(action)
-            return (result && typeof result.then === 'function') ? result.then(() => {
+            return (result && typeof result.then === 'function') ? result.then((outcome) => {
                 if (dispatchAfter){
                     console.log(`deregister ${action.type} from pending`, action)
                     dispatch(dispatchAfter(action.type))
+                }
+                if (outcome && outcome.error){
+                    throw outcome.payload
                 }
             }) : result
         }

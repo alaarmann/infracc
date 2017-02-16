@@ -90,7 +90,7 @@ describe('Asyncronous actions', () => {
                 .post('/infracc/resources', payload)
                 .reply(200, {})
 
-            const store = mockStore({ creator: {isFetching : false} })
+            const store = mockStore({})
 
             return store.dispatch(actions.addResource(newResource))
                 .then(() => { // return of async actions
@@ -98,6 +98,30 @@ describe('Asyncronous actions', () => {
                     expect(store.getActions()[1].type).toEqual(actions.CREATE_RESOURCE)
                     expect(store.getActions()[1].error).toBeFalsy()
                     expect(store.getActions()[1].payload.status).toEqual(200)
+                    expect(store.getActions()[2].type).toEqual(actions.DEREGISTER_PENDING)
+                })
+
+
+        })
+
+        it('returns rejected promise from dispatch on error', () => {
+            const newResource = {prop1 : 'val1', prop2 : 'val2'}
+            const payload = 'prop1=val1&prop2=val2';
+            nock('http://localhost:8080')
+                .post('/infracc/resources', payload)
+                .reply(409, {errorMessage : 'An error message'})
+
+            const store = mockStore({})
+            const errorHandler = jest.fn()
+
+            return store.dispatch(actions.addResource(newResource))
+                .catch(errorHandler)
+                .then(() => { // return of async actions
+                    expect(errorHandler).toHaveBeenCalled()
+                    expect(store.getActions()[0].type).toEqual(actions.REGISTER_PENDING)
+                    expect(store.getActions()[1].type).toEqual(actions.CREATE_RESOURCE)
+                    expect(store.getActions()[1].error).toBeTruthy()
+                    expect(store.getActions()[1].payload).toBeInstanceOf(Error)
                     expect(store.getActions()[2].type).toEqual(actions.DEREGISTER_PENDING)
                 })
 
