@@ -1,5 +1,5 @@
 import { filter, resources, messages, pendingActions } from './reducers'
-import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING } from './actions'
+import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING, CLOSE_RESOURCE_EDITOR } from './actions'
 
 describe('filter reducer', () => {
     it('returns the initial state', () => {
@@ -110,7 +110,7 @@ describe('pendingActions reducer', () => {
 describe('messages reducer', () => {
     const anErrorMessage = 'An error has occurred!'
     const expectedFailureState = {
-        CREATE_RESOURCE : {errorMessage : anErrorMessage}
+        [CREATE_RESOURCE] : {errorMessage : anErrorMessage}
     }
     it('applies CREATE_RESOURCE (failure) on initial state', () => {
         expect(
@@ -124,7 +124,7 @@ describe('messages reducer', () => {
 
     it('applies CREATE_RESOURCE (failure) on previously modified state', () => {
         const resultState = messages({
-            CREATE_RESOURCE : {errorMessage : 'Any previous error'}
+            [CREATE_RESOURCE] : {errorMessage : 'Any previous error'}
         }, {
             type: CREATE_RESOURCE,
             payload : new Error(anErrorMessage),
@@ -144,7 +144,7 @@ describe('messages reducer', () => {
 
     it('applies CREATE_RESOURCE (success) on previously modified state', () => {
         const resultState = messages({
-            CREATE_RESOURCE : {errorMessage : 'Any previous error'}
+            [CREATE_RESOURCE] : {errorMessage : 'Any previous error'}
         }, {
             type: CREATE_RESOURCE,
             payload : {}
@@ -152,4 +152,23 @@ describe('messages reducer', () => {
         expect(resultState).toEqual({})
     })
 
+    it('applies REGISTER_PENDING on previously modified state', () => {
+        const resultState = messages({
+            [CREATE_RESOURCE] : {errorMessage : 'Any previous error'}
+        }, {
+            type: REGISTER_PENDING,
+            payload : CREATE_RESOURCE
+        })
+        expect(resultState).toEqual({})
+    })
+
+    it('applies CLOSE_RESOURCE_EDITOR on previously modified state', () => {
+        const resultState = messages({
+            [CREATE_RESOURCE] : {errorMessage : 'Any previous error'}
+        }, {
+            type: CLOSE_RESOURCE_EDITOR,
+            payload : {}
+        })
+        expect(resultState).toEqual({})
+    })
 })

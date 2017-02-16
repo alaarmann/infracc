@@ -20,7 +20,6 @@ const mapDispatchToProps = (dispatch) => {
         ).catch(
             () => console.log("Error caught!")
         )
-        // TODO: clear error messages on close
         // TODO: reconfirm when closing with unsaved changes
     }
 }

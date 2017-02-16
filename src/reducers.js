@@ -30,11 +30,15 @@ export const pendingActions = handleActions({
     [DEREGISTER_PENDING]: {next: (state, action) => removeKeyFromImmutable(state, action.payload)}
 }, {})
 
-export const messages = handleAction(combineActions(RETRIEVE_RESOURCES, CREATE_RESOURCE), {
-    // success: remove message
-    next : (state, action)  => removeKeyFromImmutable(state, action.type),
-    // failure: add message
-    throw : (state, action) => ({...state, [action.type] : {errorMessage : action.payload.message}})
+export const messages = handleActions({
+    [combineActions(RETRIEVE_RESOURCES, CREATE_RESOURCE)] : {
+        // success: remove message
+        next: (state, action) => removeKeyFromImmutable(state, action.type),
+        // failure: add message
+        throw: (state, action) => ({...state, [action.type]: {errorMessage: action.payload.message}})
+    },
+    [REGISTER_PENDING] : {next : (state, action) => removeKeyFromImmutable(state, action.payload)},
+    [CLOSE_RESOURCE_EDITOR] : {next : (state, action) => removeKeyFromImmutable(state, CREATE_RESOURCE)}
 }, {})
 
 export const isResourceEditorOpen = handleActions({
