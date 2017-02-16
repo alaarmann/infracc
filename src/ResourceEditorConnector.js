@@ -21,7 +21,6 @@ const mapDispatchToProps = (dispatch) => {
             () => console.log("Error caught!")
         )
         // TODO: clear error messages on close
-        // TODO: prevent popup from closing while creation is in pending state
         // TODO: reconfirm when closing with unsaved changes
     }
 }

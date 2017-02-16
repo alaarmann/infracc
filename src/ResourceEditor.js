@@ -6,7 +6,7 @@ export default ({show, create, close, isPending, errorMessage, ...props}) => {
     var newResourceNameInput = null
 
     return <div className="ResourceEditor">
-        <Modal show={show} onHide={close}>
+        <Modal show={show}>
             <Modal.Header closeButton={false}>
                 <Modal.Title>Resource Editor</Modal.Title>
             </Modal.Header>
