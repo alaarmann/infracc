@@ -26,7 +26,8 @@ const createCallCreateResource = function (resource) {
             if (response.ok) {
                 return response
             } else {
-                throw new Error('Resource creation has failed!')
+                // TODO: specific error message
+                throw new Error('Resource creation has failed')
             }
         })
     }

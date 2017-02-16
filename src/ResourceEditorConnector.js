@@ -5,7 +5,8 @@ import ResourceEditor from './ResourceEditor'
 const mapStateToProps = (state) => {
     return {
         show: state.isResourceEditorOpen,
-        isPending: CREATE_RESOURCE in state.pendingActions
+        isPending: CREATE_RESOURCE in state.pendingActions,
+        errorMessage: state.messages[CREATE_RESOURCE] && state.messages[CREATE_RESOURCE].errorMessage
     }
 }
 
@@ -16,8 +17,10 @@ const mapDispatchToProps = (dispatch) => {
             () => dispatch(closeResourceEditor())
         ).then(
             () => dispatch(retrieveResources())
+        ).catch(
+            () => console.log("Error caught!")
         )
-        // TODO: refresh overview after successful creation only
+        // TODO: clear error messages on close
         // TODO: prevent popup from closing while creation is in pending state
         // TODO: reconfirm when closing with unsaved changes
     }

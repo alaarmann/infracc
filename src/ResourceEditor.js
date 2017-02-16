@@ -1,7 +1,8 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button} from 'react-bootstrap'
+import AlertMessage from './AlertMessage'
 
-export default ({show, create, close, isPending, ...props}) => {
+export default ({show, create, close, isPending, errorMessage, ...props}) => {
     var newResourceNameInput = null
 
     return <div className="ResourceEditor">
@@ -10,6 +11,7 @@ export default ({show, create, close, isPending, ...props}) => {
                 <Modal.Title>Resource Editor</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                <AlertMessage message={errorMessage}/>
                 <label htmlFor="resourceName">Resource name</label>
                 <input
                     id="resourceName"
