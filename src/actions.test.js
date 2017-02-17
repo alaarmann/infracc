@@ -154,5 +154,34 @@ describe('closeResourceEditor', () => {
     })
 })
 
+describe('openComponent', () => {
+    const A_COMPONENT = 'A_COMPONENT'
+
+    it('creates an action to register an open component', () => {
+        const expectedAction = {
+            type: actions.OPEN_COMPONENT,
+            payload: A_COMPONENT
+        }
+        expect(actions.openComponent(A_COMPONENT)).toEqual(expectedAction)
+    })
+    it('is FSA compliant', () => {
+        expect(isFSA(actions.openComponent(A_COMPONENT))).toBe(true)
+    })
+})
+
+describe('closeComponent', () => {
+    const A_COMPONENT = 'A_COMPONENT'
+
+    it('creates an action to deregister a component from open components', () => {
+        const expectedAction = {
+            type: actions.CLOSE_COMPONENT,
+            payload: A_COMPONENT
+        }
+        expect(actions.closeComponent(A_COMPONENT)).toEqual(expectedAction)
+    })
+    it('is FSA compliant', () => {
+        expect(isFSA(actions.closeComponent(A_COMPONENT))).toBe(true)
+    })
+})
 
 

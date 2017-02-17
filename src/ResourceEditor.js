@@ -2,6 +2,8 @@ import React from 'react';
 import { Modal, Button} from 'react-bootstrap'
 import AlertMessage from './AlertMessage'
 
+export const RESOURCE_EDITOR = 'RESOURCE_EDITOR'
+
 export default ({show, create, close, isPending, errorMessage, ...props}) => {
     var newResourceNameInput = null
 

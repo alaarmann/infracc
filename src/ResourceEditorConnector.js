@@ -1,5 +1,6 @@
 import {connect} from 'react-redux'
-import {closeResourceEditor, addResource, CREATE_RESOURCE, retrieveResources} from './actions'
+import {closeResourceEditor, addResource, CREATE_RESOURCE, retrieveResources, closeComponent} from './actions'
+import {RESOURCE_EDITOR} from './ResourceEditor'
 import ResourceEditor from './ResourceEditor'
 
 const mapStateToProps = (state) => {
@@ -12,9 +13,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        close: () => dispatch(closeResourceEditor()),
+        close: () => dispatch(closeComponent(RESOURCE_EDITOR)),
         create: (resourceKey) => dispatch(addResource({'key' : resourceKey})).then(
-            () => dispatch(closeResourceEditor())
+            () => dispatch(closeComponent(RESOURCE_EDITOR))
         ).then(
             () => dispatch(retrieveResources())
         ).catch(

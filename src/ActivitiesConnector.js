@@ -1,5 +1,6 @@
 import {connect} from 'react-redux'
-import {retrieveResources, CREATE_RESOURCE, RETRIEVE_RESOURCES, openResourceEditor} from './actions'
+import {retrieveResources, CREATE_RESOURCE, RETRIEVE_RESOURCES, openComponent} from './actions'
+import {RESOURCE_EDITOR} from './ResourceEditor'
 import Activities from './Activities'
 
 const mapStateToProps = (state) => {
@@ -12,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onCreateButtonClick: () => dispatch(openResourceEditor()),
+        onCreateButtonClick: () => dispatch(openComponent(RESOURCE_EDITOR)),
         onRefreshButtonClick: () => dispatch(retrieveResources())
     }
 }

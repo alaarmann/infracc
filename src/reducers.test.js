@@ -1,5 +1,6 @@
-import { filter, resources, messages, pendingActions } from './reducers'
-import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING, CLOSE_RESOURCE_EDITOR } from './actions'
+import { filter, resources, messages, pendingActions, openComponents } from './reducers'
+import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING, CLOSE_RESOURCE_EDITOR, OPEN_COMPONENT, CLOSE_COMPONENT } from './actions'
+import { RESOURCE_EDITOR } from './ResourceEditor'
 
 describe('filter reducer', () => {
     it('returns the initial state', () => {
@@ -162,12 +163,54 @@ describe('messages reducer', () => {
         expect(resultState).toEqual({})
     })
 
-    it('applies CLOSE_RESOURCE_EDITOR on previously modified state', () => {
+    it('applies CLOSE_COMPONENT [RESOURCE_EDITOR] on previously modified state', () => {
         const resultState = messages({
             [CREATE_RESOURCE] : {errorMessage : 'Any previous error'}
         }, {
-            type: CLOSE_RESOURCE_EDITOR,
-            payload : {}
+            type: CLOSE_COMPONENT,
+            payload : RESOURCE_EDITOR
+        })
+        expect(resultState).toEqual({})
+    })
+})
+
+describe('openComponents reducer', () => {
+    const A_COMPONENT = 'A_COMPONENT'
+
+    it('applies OPEN_COMPONENT on initial state', () => {
+        expect(
+            openComponents(undefined, {
+                type : OPEN_COMPONENT,
+                payload : A_COMPONENT
+            })
+        ).toEqual({[A_COMPONENT]: {}})
+    })
+
+    it('applies OPEN_COMPONENT on previously modified state', () => {
+        const resultState = openComponents({
+            [A_COMPONENT] : {}
+        }, {
+            type: OPEN_COMPONENT,
+            payload : A_COMPONENT
+        })
+        expect(resultState).toEqual({[A_COMPONENT]: {}})
+    })
+
+    it('applies CLOSE_COMPONENT on initial state', () => {
+        expect(
+            openComponents(undefined, {
+                type : CLOSE_COMPONENT,
+                payload : A_COMPONENT
+            })
+        ).toEqual({})
+    })
+
+    it('applies CLOSE_COMPONENT on previously modified state', () => {
+        const resultState = openComponents({
+            [A_COMPONENT] : {}
+        }, {
+            type: CLOSE_COMPONENT,
+            payload : A_COMPONENT
         })
         expect(resultState).toEqual({})
     })
