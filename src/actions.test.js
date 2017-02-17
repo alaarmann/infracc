@@ -130,30 +130,6 @@ describe('Asyncronous actions', () => {
     })
 })
 
-describe('openResourceEditor', () => {
-    it('creates an action to open the resource editor', () => {
-        const expectedAction = {
-            type: actions.OPEN_RESOURCE_EDITOR
-        }
-        expect(actions.openResourceEditor()).toEqual(expectedAction)
-    })
-    it('is FSA compliant', () => {
-        expect(isFSA(actions.openResourceEditor())).toBe(true)
-    })
-})
-
-describe('closeResourceEditor', () => {
-    it('creates an action to close the resource editor', () => {
-        const expectedAction = {
-            type: actions.CLOSE_RESOURCE_EDITOR
-        }
-        expect(actions.closeResourceEditor()).toEqual(expectedAction)
-    })
-    it('is FSA compliant', () => {
-        expect(isFSA(actions.closeResourceEditor())).toBe(true)
-    })
-})
-
 describe('openComponent', () => {
     const A_COMPONENT = 'A_COMPONENT'
 

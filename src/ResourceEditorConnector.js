@@ -1,11 +1,11 @@
 import {connect} from 'react-redux'
-import {closeResourceEditor, addResource, CREATE_RESOURCE, retrieveResources, closeComponent} from './actions'
+import {addResource, CREATE_RESOURCE, retrieveResources, closeComponent} from './actions'
 import {RESOURCE_EDITOR} from './ResourceEditor'
 import ResourceEditor from './ResourceEditor'
 
 const mapStateToProps = (state) => {
     return {
-        show: state.isResourceEditorOpen,
+        show: RESOURCE_EDITOR in state.openComponents,
         isPending: CREATE_RESOURCE in state.pendingActions,
         errorMessage: state.messages[CREATE_RESOURCE] && state.messages[CREATE_RESOURCE].errorMessage
     }

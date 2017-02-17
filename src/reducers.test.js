@@ -1,5 +1,5 @@
 import { filter, resources, messages, pendingActions, openComponents } from './reducers'
-import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING, CLOSE_RESOURCE_EDITOR, OPEN_COMPONENT, CLOSE_COMPONENT } from './actions'
+import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING, OPEN_COMPONENT, CLOSE_COMPONENT } from './actions'
 import { RESOURCE_EDITOR } from './ResourceEditor'
 
 describe('filter reducer', () => {
