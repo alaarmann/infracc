@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button} from 'react-bootstrap'
+import { Modal, Button, FormGroup, ControlLabel, FormControl} from 'react-bootstrap'
 import AlertMessage from './AlertMessage'
 
 export const RESOURCE_EDITOR = 'RESOURCE_EDITOR'
@@ -14,14 +14,16 @@ export default ({show, create, close, isPending, errorMessage, ...props}) => {
             </Modal.Header>
             <Modal.Body>
                 <AlertMessage message={errorMessage}/>
-                <label htmlFor="resourceName">Resource name</label>
-                <input
-                    id="resourceName"
-                    type="text"
-                    disabled={isPending}
-                    ref={(input) => {
-                        newResourceNameInput = input;
-                    }}/>
+                <FormGroup controlId="resourceName">
+                    <ControlLabel>Resource name</ControlLabel>
+                    <FormControl
+                        type="text"
+                        placeholder="Enter resource name"
+                        disabled={isPending}
+                        inputRef={input => {
+                            newResourceNameInput = input;
+                        }}/>
+                </FormGroup>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={e => {
