@@ -1,4 +1,5 @@
 import React from 'react';
+import { ListGroup, ListGroupItem} from 'react-bootstrap'
 
 export default ({resources, isFetching, lastUpdated, ...props}) => (
   <div className="Resources" style={{ opacity: isFetching ? 0.5 : 1 }}>
@@ -8,10 +9,10 @@ export default ({resources, isFetching, lastUpdated, ...props}) => (
       </span>
       }
 
-      <ul>
+      <ListGroup>
         {resources.map(resource => (
-          <li key={resource._id}>{resource.key}</li>
+          <ListGroupItem key={resource._id}>{resource.key}</ListGroupItem>
         ))}
-      </ul>
+      </ListGroup>
     </div>
 )
