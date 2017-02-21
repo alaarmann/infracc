@@ -128,6 +128,51 @@ describe('Asyncronous actions', () => {
 
         })
     })
+
+    describe('deleteResource', () => {
+        it('creates DELETE_RESOURCE and executes fetch', () => {
+            const aResource = {_id : '589cf9240553b57247054651', prop1 : 'val1', prop2 : 'val2'}
+            nock('http://localhost:8080')
+                .delete(`/infracc/resources/${aResource['_id']}`)
+                .reply(200, {})
+
+            const store = mockStore({})
+
+            return store.dispatch(actions.deleteResource(aResource))
+                .then(() => { // return of async actions
+                    expect(store.getActions()[0].type).toEqual(actions.REGISTER_PENDING)
+                    expect(store.getActions()[1].type).toEqual(actions.DELETE_RESOURCE)
+                    expect(store.getActions()[1].error).toBeFalsy()
+                    expect(store.getActions()[1].payload.status).toEqual(200)
+                    expect(store.getActions()[2].type).toEqual(actions.DEREGISTER_PENDING)
+                })
+
+
+        })
+
+        it('returns rejected promise from dispatch on error', () => {
+            const aResource = {_id : '589cf9240553b57247054651', prop1 : 'val1', prop2 : 'val2'}
+            nock('http://localhost:8080')
+                .delete(`/infracc/resources/${aResource['_id']}`)
+                .reply(410, {errorMessage : 'An error message'})
+
+            const store = mockStore({})
+            const errorHandler = jest.fn()
+
+            return store.dispatch(actions.deleteResource(aResource))
+                .catch(errorHandler)
+                .then(() => { // return of async actions
+                    expect(errorHandler).toHaveBeenCalled()
+                    expect(store.getActions()[0].type).toEqual(actions.REGISTER_PENDING)
+                    expect(store.getActions()[1].type).toEqual(actions.DELETE_RESOURCE)
+                    expect(store.getActions()[1].error).toBeTruthy()
+                    expect(store.getActions()[1].payload).toBeInstanceOf(Error)
+                    expect(store.getActions()[2].type).toEqual(actions.DEREGISTER_PENDING)
+                })
+
+
+        })
+    })
 })
 
 describe('openComponent', () => {
