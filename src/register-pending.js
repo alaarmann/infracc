@@ -7,7 +7,7 @@ const createRegisterPendingAsyncMiddleware = ({dispatchBefore, dispatchAfter}) =
             if (dispatchBefore){
                 dispatch(dispatchBefore(action.type))
             }
-            action.payload = action.payload()
+            action.payload = action.payload(dispatch)
             console.log('dispatching async', action)
             const result =  next(action)
             return (result && typeof result.then === 'function') ? result.then((outcome) => {

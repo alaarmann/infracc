@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { handleAction, handleActions, combineActions } from 'redux-actions'
-import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING, OPEN_COMPONENT, CLOSE_COMPONENT } from './actions'
+import { FILTER_RESOURCES, RETRIEVE_RESOURCES, CREATE_RESOURCE, REGISTER_PENDING, DEREGISTER_PENDING, OPEN_COMPONENT, CLOSE_COMPONENT, REGISTER_CONFIRM_CALLBACKS } from './actions'
 import { RESOURCE_EDITOR } from './ResourceEditor'
 
 export const filter = handleAction(FILTER_RESOURCES, (state, action) => (typeof action.payload !== 'undefined') ? action.payload : state, '')
@@ -47,12 +47,18 @@ export const openComponents = handleActions({
     [OPEN_COMPONENT] : {next : (state, action) => addKeyToImmutable(state, action.payload)}
 }, {})
 
+// TODO: get rid of separate confirmCallbacks, integrate into registry of pending actions?
+export const confirmCallbacks = handleActions({
+    [REGISTER_CONFIRM_CALLBACKS] : {next : (state, action) => ({...state, ...action.payload})}
+}, {})
+
 const app = combineReducers({
     filter,
     resources,
     messages,
     pendingActions,
-    openComponents
+    openComponents,
+    confirmCallbacks
 })
 
 export default app

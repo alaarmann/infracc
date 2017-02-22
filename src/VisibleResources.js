@@ -1,6 +1,7 @@
 import {connect} from 'react-redux'
 import Resources from './Resources'
-import {RETRIEVE_RESOURCES, deleteResource, retrieveResources} from './actions'
+import {RETRIEVE_RESOURCES, deleteResource, retrieveResources, confirmActivity, closeComponent} from './actions'
+import {CONFIRM_DIALOG} from './ConfirmDialog'
 
 const mapStateToProps = (state) => {
     return {
@@ -13,11 +14,20 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onDeleteButtonClick: (resource) => dispatch(deleteResource(resource))
+        onDeleteButtonClick: (resource) => dispatch(confirmActivity())
             .then(
+                // TODO: extract to (future) action chain
+                () => dispatch(closeComponent(CONFIRM_DIALOG))
+            ).then(
+                () => dispatch(deleteResource(resource))
+            ).then(
                 () => dispatch(retrieveResources())
             ).catch(
-                () => console.log("Error caught!")
+                () => {
+                    console.log("Error or Cancel caught!")
+                    // TODO: extract to action chain
+                    dispatch(closeComponent(CONFIRM_DIALOG))
+                }
             )
     }
 }

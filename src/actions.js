@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import { createAction } from 'redux-actions'
+import {CONFIRM_DIALOG} from './ConfirmDialog'
 
 // Action types
 export const FILTER_RESOURCES = 'FILTER_RESOURCES'
@@ -10,6 +11,8 @@ export const REGISTER_PENDING = 'REGISTER_PENDING'
 export const DEREGISTER_PENDING = 'DEREGISTER_PENDING'
 export const OPEN_COMPONENT = 'OPEN_COMPONENT'
 export const CLOSE_COMPONENT = 'CLOSE_COMPONENT'
+export const CONFIRM_ACTIVITY = 'CONFIRM_ACTIVITY'
+export const REGISTER_CONFIRM_CALLBACKS = 'REGISTER_CONFIRM_CALLBACKS'
 
 // Action creators
 export const filterResources = createAction(FILTER_RESOURCES)
@@ -61,6 +64,24 @@ const createCallRetrieveResources = function () {
     }
 }
 
+export const openComponent = createAction(OPEN_COMPONENT)
+export const closeComponent = createAction(CLOSE_COMPONENT)
+
+export const registerConfirmCallbacks = createAction(REGISTER_CONFIRM_CALLBACKS)
+
+const createConfirmActivityPayload = function () {
+    return function (dispatch) {
+        return new Promise( (resolve, reject) => {
+            dispatch(registerConfirmCallbacks({
+                resolve,
+                reject
+            }))
+            // TODO: extract to action chain
+            dispatch(openComponent(CONFIRM_DIALOG))
+        })
+    }
+}
+
 export const addResource = createAction(CREATE_RESOURCE, createCallCreateResource)
 export const retrieveResources = createAction(RETRIEVE_RESOURCES, createCallRetrieveResources)
 export const deleteResource = createAction(DELETE_RESOURCE, createCallDeleteResource)
@@ -68,5 +89,5 @@ export const deleteResource = createAction(DELETE_RESOURCE, createCallDeleteReso
 export const registerPending = createAction(REGISTER_PENDING)
 export const deregisterPending = createAction(DEREGISTER_PENDING)
 
-export const openComponent = createAction(OPEN_COMPONENT)
-export const closeComponent = createAction(CLOSE_COMPONENT)
+export const confirmActivity = createAction(CONFIRM_ACTIVITY, createConfirmActivityPayload)
+

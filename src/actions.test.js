@@ -173,6 +173,55 @@ describe('Asyncronous actions', () => {
 
         })
     })
+
+    describe('confirmActivity', () => {
+        it('creates CONFIRM_ACTIVITY and resolves', () => {
+            const store = mockStore({})
+            const registerResolve = resolve => resolve()
+
+            const promise = store.dispatch(actions.confirmActivity(registerResolve))
+                .then(() => { // return of async actions
+                    expect(store.getActions()[0].type).toEqual(actions.REGISTER_PENDING)
+                    expect(store.getActions()[1].type).toEqual(actions.REGISTER_CONFIRM_CALLBACKS)
+                    expect(store.getActions()[2].type).toEqual(actions.OPEN_COMPONENT)
+                    expect(store.getActions()[3].type).toEqual(actions.CONFIRM_ACTIVITY)
+                    expect(store.getActions()[3].error).toBeFalsy()
+                    expect(store.getActions()[4].type).toEqual(actions.DEREGISTER_PENDING)
+                })
+
+            expect(store.getActions()[1].type).toEqual(actions.REGISTER_CONFIRM_CALLBACKS)
+            store.getActions()[1].payload.resolve()
+
+
+            return promise
+
+        })
+
+        it('creates CONFIRM_ACTIVITY and rejects', () => {
+            const store = mockStore({})
+            const registerReject = (resolve, reject) => reject()
+            const errorHandler = jest.fn()
+
+            const promise = store.dispatch(actions.confirmActivity(registerReject))
+                .catch(errorHandler)
+                .then(() => { // return of async actions
+                    expect(errorHandler).toHaveBeenCalled()
+                    expect(store.getActions()[0].type).toEqual(actions.REGISTER_PENDING)
+                    expect(store.getActions()[1].type).toEqual(actions.REGISTER_CONFIRM_CALLBACKS)
+                    expect(store.getActions()[2].type).toEqual(actions.OPEN_COMPONENT)
+                    expect(store.getActions()[3].type).toEqual(actions.CONFIRM_ACTIVITY)
+                    expect(store.getActions()[3].error).toBeTruthy()
+                    expect(store.getActions()[4].type).toEqual(actions.DEREGISTER_PENDING)
+                })
+
+            expect(store.getActions()[1].type).toEqual(actions.REGISTER_CONFIRM_CALLBACKS)
+            store.getActions()[1].payload.reject()
+
+            return promise
+
+
+        })
+    })
 })
 
 describe('openComponent', () => {
