@@ -16,17 +16,12 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onDeleteButtonClick: (resource) => dispatch(confirmActivity())
             .then(
-                // TODO: extract to (future) action chain
-                () => dispatch(closeComponent(CONFIRM_DIALOG))
-            ).then(
                 () => dispatch(deleteResource(resource))
             ).then(
                 () => dispatch(retrieveResources())
             ).catch(
-                () => {
-                    console.log("Error or Cancel caught!")
-                    // TODO: extract to action chain
-                    dispatch(closeComponent(CONFIRM_DIALOG))
+                (error) => {
+                    console.log("Error or Cancel caught!", error)
                 }
             )
     }

@@ -76,9 +76,13 @@ const createConfirmActivityPayload = function () {
                 resolve,
                 reject
             }))
-            // TODO: extract to action chain
             dispatch(openComponent(CONFIRM_DIALOG))
         })
+            .then(() => dispatch(closeComponent(CONFIRM_DIALOG)),
+                (error) => {
+                    dispatch(closeComponent(CONFIRM_DIALOG))
+                    return Promise.reject(error)
+                })
     }
 }
 
