@@ -49,7 +49,7 @@ export const messages = handleActions({
         throw: (state, action) => ({...state, [action.type]: {errorMessage: action.payload.message}})
     },
     [REGISTER_PENDING] : {next : (state, action) => removeKeyFromImmutable(state, action.payload)},
-    [CLOSE_COMPONENT] : {next : (state, action) => action.payload === RESOURCE_EDITOR ? removeKeyFromImmutable(state, CREATE_RESOURCE) : state}
+    [CLOSE_COMPONENT] : {next : (state, action) => action.payload.key === RESOURCE_EDITOR ? removeKeyFromImmutable(state, CREATE_RESOURCE) : state}
 }, {})
 
 export const openComponents = handleActions({
