@@ -16,9 +16,7 @@ const createReduxActionChain = () => {
             return Promise.resolve()
                 .then(
                     (outcome) => {
-                        if (typeof dispatchBefore === 'function') {
-                            return dispatch(dispatchBefore(outcome))
-                        } else if(typeof dispatchBefore !== 'undefined'){
+                        if(typeof dispatchBefore !== 'undefined'){
                             return dispatch(dispatchBefore)
                         }
                         return outcome
@@ -29,17 +27,13 @@ const createReduxActionChain = () => {
                 )
                 .then(
                     (outcome) => {
-                        if (typeof dispatchNext === 'function') {
-                            return dispatch(dispatchNext(outcome))
-                        } else if(typeof dispatchNext !== 'undefined'){
+                        if(typeof dispatchNext !== 'undefined'){
                             return dispatch(dispatchNext)
                         }
                         return outcome
                     },
                     (error) => {
-                        if (typeof dispatchThrow === 'function') {
-                            return Promise.reject(dispatch(dispatchThrow(error)))
-                        } else if(typeof dispatchThrow !== 'undefined'){
+                        if(typeof dispatchThrow !== 'undefined'){
                             return dispatch(dispatchThrow)
                         }
                         return Promise.reject(error)
