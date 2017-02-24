@@ -23,7 +23,7 @@ const createReduxActionChain = () => {
                     }
                 )
                 .then(
-                    () => dispatch(action)
+                    () => next(action)
                 )
                 .then(
                     (outcome) => {
