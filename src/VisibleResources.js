@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onDeleteButtonClick: (resource) => dispatch(confirmActivity('Delete resource'))
+        onDeleteButtonClick: (resource) => dispatch(confirmActivity(`Delete resource '${resource.key}'`))
             .then(
                 () => dispatch(deleteResource(resource))
             ).then(
