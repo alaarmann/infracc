@@ -168,7 +168,7 @@ describe('messages reducer', () => {
             [CREATE_RESOURCE] : {errorMessage : 'Any previous error'}
         }, {
             type: CLOSE_COMPONENT,
-            payload : RESOURCE_EDITOR
+            payload : {key : RESOURCE_EDITOR}
         })
         expect(resultState).toEqual({})
     })
