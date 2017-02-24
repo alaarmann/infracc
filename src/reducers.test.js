@@ -181,7 +181,7 @@ describe('openComponents reducer', () => {
         expect(
             openComponents(undefined, {
                 type : OPEN_COMPONENT,
-                payload : A_COMPONENT
+                payload : {key : A_COMPONENT}
             })
         ).toEqual({[A_COMPONENT]: {}})
     })
@@ -191,7 +191,7 @@ describe('openComponents reducer', () => {
             [A_COMPONENT] : {}
         }, {
             type: OPEN_COMPONENT,
-            payload : A_COMPONENT
+            payload : {key : A_COMPONENT}
         })
         expect(resultState).toEqual({[A_COMPONENT]: {}})
     })
@@ -200,7 +200,7 @@ describe('openComponents reducer', () => {
         expect(
             openComponents(undefined, {
                 type : CLOSE_COMPONENT,
-                payload : A_COMPONENT
+                payload : {key : A_COMPONENT}
             })
         ).toEqual({})
     })
@@ -210,7 +210,7 @@ describe('openComponents reducer', () => {
             [A_COMPONENT] : {}
         }, {
             type: CLOSE_COMPONENT,
-            payload : A_COMPONENT
+            payload : {key : A_COMPONENT}
         })
         expect(resultState).toEqual({})
     })

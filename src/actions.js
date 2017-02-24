@@ -69,18 +69,25 @@ export const closeComponent = createAction(CLOSE_COMPONENT)
 
 export const registerConfirmCallbacks = createAction(REGISTER_CONFIRM_CALLBACKS)
 
-const createConfirmActivityPayload = function () {
+const createConfirmActivityPayload = function (activity) {
     return function (dispatch) {
         return new Promise( (resolve, reject) => {
             dispatch(registerConfirmCallbacks({
                 resolve,
                 reject
             }))
-            dispatch(openComponent(CONFIRM_DIALOG))
+            dispatch(openComponent({
+                key: CONFIRM_DIALOG,
+                value: {
+                    resolve,
+                    reject,
+                    activity
+                }
+            }))
         })
-            .then(() => dispatch(closeComponent(CONFIRM_DIALOG)),
+            .then(() => dispatch(closeComponent({key : CONFIRM_DIALOG})),
                 (error) => {
-                    dispatch(closeComponent(CONFIRM_DIALOG))
+                    dispatch(closeComponent({key : CONFIRM_DIALOG}))
                     return Promise.reject(error)
                 })
     }

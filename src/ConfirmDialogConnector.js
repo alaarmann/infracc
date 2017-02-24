@@ -5,10 +5,9 @@ import ConfirmDialog from './ConfirmDialog'
 const mapStateToProps = (state) => {
     return {
         show: CONFIRM_DIALOG in state.openComponents,
-        ok: state.confirmCallbacks.resolve,
-        cancel: state.confirmCallbacks.reject
-        // TODO: pass description of activity to be confirmed
-        //activity: state.openComponents[CONFIRM_DIALOG] && state.openComponents[CONFIRM_DIALOG].activity
+        ok: state.openComponents[CONFIRM_DIALOG] && state.openComponents[CONFIRM_DIALOG].resolve,
+        cancel: state.openComponents[CONFIRM_DIALOG] && state.openComponents[CONFIRM_DIALOG].reject,
+        activity: state.openComponents[CONFIRM_DIALOG] && state.openComponents[CONFIRM_DIALOG].activity
     }
 }
 

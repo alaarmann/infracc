@@ -89,7 +89,7 @@ describe('mapDispatchToProps', () => {
         expect(onCreateButtonClick).toBeInstanceOf(Function)
         onCreateButtonClick()
         expect(dispatch).toHaveBeenCalledTimes(1)
-        expect(dispatch).toHaveBeenCalledWith({"payload": "RESOURCE_EDITOR", "type": "OPEN_COMPONENT"})
+        expect(dispatch).toHaveBeenCalledWith({"payload": {key : "RESOURCE_EDITOR"}, "type": "OPEN_COMPONENT"})
     });
 
     it('maps onRefreshButtonClick', () => {

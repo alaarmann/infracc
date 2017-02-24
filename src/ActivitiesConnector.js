@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onCreateButtonClick: () => dispatch(openComponent(RESOURCE_EDITOR)),
+        onCreateButtonClick: () => dispatch(openComponent({key : RESOURCE_EDITOR})),
         onRefreshButtonClick: () => dispatch(retrieveResources())
     }
 }

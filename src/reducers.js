@@ -25,6 +25,16 @@ const removeKeyFromImmutable = (immutableObject, keyToRemove) => Object.keys(imm
         return obj
     }, {})
 
+const addKeyValueToImmutable = (immutableObject, {key, value}) =>
+    typeof key !== 'undefined' ? {...immutableObject, [key] : typeof value !== 'undefined' ? value : {}} : immutableObject
+
+const removeKeyValueFromImmutable = (immutableObject, {key}) => Object.keys(immutableObject).reduce((obj, eachKey) => {
+    if (eachKey !== key) {
+        return { ...obj, [eachKey]: immutableObject[key] }
+    }
+    return obj
+}, {})
+
 // manage pendingActions
 export const pendingActions = handleActions({
     [REGISTER_PENDING]: {next: (state, action) => addKeyToImmutable(state, action.payload)},
@@ -43,8 +53,8 @@ export const messages = handleActions({
 }, {})
 
 export const openComponents = handleActions({
-    [CLOSE_COMPONENT] : {next : (state, action) => removeKeyFromImmutable(state, action.payload)},
-    [OPEN_COMPONENT] : {next : (state, action) => addKeyToImmutable(state, action.payload)}
+    [CLOSE_COMPONENT] : {next : (state, action) => removeKeyValueFromImmutable(state, action.payload)},
+    [OPEN_COMPONENT] : {next : (state, action) => addKeyValueToImmutable(state, action.payload)}
 }, {})
 
 // TODO: get rid of separate confirmCallbacks, integrate into registry of pending actions?

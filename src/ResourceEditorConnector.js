@@ -13,9 +13,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        close: () => dispatch(closeComponent(RESOURCE_EDITOR)),
+        close: () => dispatch(closeComponent({key : RESOURCE_EDITOR})),
         create: (resourceKey) => dispatch(addResource({'key' : resourceKey})).then(
-            () => dispatch(closeComponent(RESOURCE_EDITOR))
+            () => dispatch(closeComponent({key : RESOURCE_EDITOR}))
         ).then(
             () => dispatch(retrieveResources())
         ).catch(

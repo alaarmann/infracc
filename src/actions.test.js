@@ -232,12 +232,12 @@ describe('openComponent', () => {
     it('creates an action to register an open component', () => {
         const expectedAction = {
             type: actions.OPEN_COMPONENT,
-            payload: A_COMPONENT
+            payload: {key : A_COMPONENT}
         }
-        expect(actions.openComponent(A_COMPONENT)).toEqual(expectedAction)
+        expect(actions.openComponent({key : A_COMPONENT})).toEqual(expectedAction)
     })
     it('is FSA compliant', () => {
-        expect(isFSA(actions.openComponent(A_COMPONENT))).toBe(true)
+        expect(isFSA(actions.openComponent({key : A_COMPONENT}))).toBe(true)
     })
 })
 
@@ -247,12 +247,12 @@ describe('closeComponent', () => {
     it('creates an action to deregister a component from open components', () => {
         const expectedAction = {
             type: actions.CLOSE_COMPONENT,
-            payload: A_COMPONENT
+            payload: {key : A_COMPONENT}
         }
-        expect(actions.closeComponent(A_COMPONENT)).toEqual(expectedAction)
+        expect(actions.closeComponent({key : A_COMPONENT})).toEqual(expectedAction)
     })
     it('is FSA compliant', () => {
-        expect(isFSA(actions.closeComponent(A_COMPONENT))).toBe(true)
+        expect(isFSA(actions.closeComponent({key : A_COMPONENT}))).toBe(true)
     })
 })
 

@@ -1,7 +1,6 @@
 import {connect} from 'react-redux'
 import Resources from './Resources'
-import {RETRIEVE_RESOURCES, deleteResource, retrieveResources, confirmActivity, closeComponent} from './actions'
-import {CONFIRM_DIALOG} from './ConfirmDialog'
+import {RETRIEVE_RESOURCES, deleteResource, retrieveResources, confirmActivity} from './actions'
 
 const mapStateToProps = (state) => {
     return {
@@ -14,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onDeleteButtonClick: (resource) => dispatch(confirmActivity())
+        onDeleteButtonClick: (resource) => dispatch(confirmActivity('Delete resource'))
             .then(
                 () => dispatch(deleteResource(resource))
             ).then(
