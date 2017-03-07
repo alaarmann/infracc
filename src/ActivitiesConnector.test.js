@@ -109,7 +109,7 @@ describe('mapDispatchToProps', () => {
         expect(onRefreshButtonClick).toBeInstanceOf(Function)
         onRefreshButtonClick()
         expect(dispatch).toHaveBeenCalledTimes(1)
-        expect(dispatch.mock.calls[0][0].type).toBe(actions.RETRIEVE_RESOURCES)
+        expect(dispatch.mock.calls[0][0].type).toBe(actions.RETRIEVE_RESOURCES_SIMPLE)
     });
 
 });

@@ -5,6 +5,7 @@ import {CONFIRM_DIALOG} from './ConfirmDialog'
 // Action types
 export const FILTER_RESOURCES = 'FILTER_RESOURCES'
 export const RETRIEVE_RESOURCES = 'RETRIEVE_RESOURCES'
+export const RETRIEVE_RESOURCES_SIMPLE = 'RETRIEVE_RESOURCES_SIMPLE'
 export const CREATE_RESOURCE = 'CREATE_RESOURCE'
 export const DELETE_RESOURCE ='DELETE_RESOURCE'
 export const REGISTER_PENDING = 'REGISTER_PENDING'
@@ -95,6 +96,7 @@ const createConfirmActivityPayload = function (activity) {
 
 export const addResource = createAction(CREATE_RESOURCE, createCallCreateResource)
 export const retrieveResources = createAction(RETRIEVE_RESOURCES, createCallRetrieveResources)
+export const retrieveResourcesSimple = createAction(RETRIEVE_RESOURCES_SIMPLE)
 export const deleteResource = createAction(DELETE_RESOURCE, createCallDeleteResource)
 
 export const registerPending = createAction(REGISTER_PENDING)

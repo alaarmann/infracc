@@ -21,6 +21,7 @@
     "redux-actions": "^1.2.1",
     "redux-logger": "^2.7.4",
     "redux-promise": "^0.5.3",
+    "redux-saga": "^0.14.3",
     "redux-thunk": "^2.1.0"
   },
   "scripts": {
