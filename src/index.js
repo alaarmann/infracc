@@ -8,7 +8,7 @@ import promiseMiddleware from 'redux-promise'
 import createLogger from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
 import app from './reducers'
-import { retrieveResourcesSimple, registerPending, deregisterPending } from './actions'
+import { startAsync, registerPending, deregisterPending, RETRIEVE_RESOURCES } from './actions'
 import createRegisterPendingMiddleware from './register-pending'
 import createSagaMiddleware from 'redux-saga'
 import saga from './sagas'
@@ -26,7 +26,7 @@ const store = createStore(app,
 
 sagaMiddleware.run(saga)
 
-store.dispatch(retrieveResourcesSimple())
+store.dispatch(startAsync(RETRIEVE_RESOURCES))
 
 ReactDOM.render(
 <Provider store={store}>
