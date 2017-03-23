@@ -3,7 +3,7 @@ import { RETRIEVE_RESOURCES, RETRIEVE_RESOURCES_SIMPLE } from './actions'
 import fetch from 'isomorphic-fetch'
 
 // worker Saga
-function* retrieveResources(action) {
+export function* retrieveResources(action) {
     try {
         const response = yield call(fetch, 'http://localhost:8080/infracc/resources')
         const resources = yield call(() => response.json())
