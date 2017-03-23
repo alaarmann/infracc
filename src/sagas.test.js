@@ -6,28 +6,32 @@ import fetch from 'isomorphic-fetch'
 import createSagaMiddleware from 'redux-saga'
 import configureMockStore from 'redux-mock-store'
 import nock from 'nock'
-import { startAsync, RETRIEVE_RESOURCES, START_ASYNC } from './actions'
+import { startAsync, RETRIEVE_RESOURCES, START_ASYNC, registerPending, deregisterPending } from './actions'
 import { retrieveResources } from './sagas'
 import saga from './sagas'
 
 describe('retrieveResources', () => {
 
-    const generator = retrieveResources()
+    let generator
+    beforeEach(() => generator = retrieveResources())
 
     it('calls fetch()', () => {
+        generator.next() // registerPending
         expect(generator.next().value).toEqual(call(fetch, 'http://localhost:8080/infracc/resources'))
-    })
-
-    it('calls another function', () => {
-        expect(generator.next().value.CALL).toBeDefined()
+        generator.return()
     })
 
     it('puts action RETRIEVE_RESOURCES', () => {
+        generator.next() // registerPending
+        generator.next() // call fetch()
+        generator.next() // json()
         const putAction = generator.next().value
         expect(putAction.PUT).toBeDefined()
         expect(putAction.PUT.action).toBeDefined()
         expect(putAction.PUT.action.type).toEqual(RETRIEVE_RESOURCES)
     })
+
+    // TODO: test error condition
 })
 
 describe('saga', () => {
@@ -47,7 +51,7 @@ describe('saga', () => {
 
         store.dispatch(startAsync(RETRIEVE_RESOURCES))
 
-        const expectedActionCount = 2
+        const expectedActionCount = 4
 
         return new Promise((resolve) =>
             store.subscribe(
@@ -57,8 +61,10 @@ describe('saga', () => {
 
             expect(store.getActions().length).toEqual(expectedActionCount)
             expect(store.getActions()[0].type).toEqual(START_ASYNC)
-            expect(store.getActions()[1].type).toEqual(RETRIEVE_RESOURCES)
-            expect(store.getActions()[1].payload.resources).toEqual(JSON.parse(resourcesPayload))
+            expect(store.getActions()[1]).toEqual(registerPending(RETRIEVE_RESOURCES))
+            expect(store.getActions()[2].type).toEqual(RETRIEVE_RESOURCES)
+            expect(store.getActions()[2].payload.resources).toEqual(JSON.parse(resourcesPayload))
+            expect(store.getActions()[3]).toEqual(deregisterPending(RETRIEVE_RESOURCES))
         })
 
     })
