@@ -6,7 +6,7 @@ import fetch from 'isomorphic-fetch'
 import createSagaMiddleware from 'redux-saga'
 import configureMockStore from 'redux-mock-store'
 import nock from 'nock'
-import { retrieveResourcesSimple, RETRIEVE_RESOURCES, RETRIEVE_RESOURCES_SIMPLE } from './actions'
+import { startAsync, RETRIEVE_RESOURCES, START_ASYNC } from './actions'
 import { retrieveResources } from './sagas'
 import saga from './sagas'
 
@@ -45,7 +45,7 @@ describe('saga', () => {
         const store = mockStore({})
         sagaMiddleware.run(saga)
 
-        store.dispatch(retrieveResourcesSimple())
+        store.dispatch(startAsync(RETRIEVE_RESOURCES))
 
         const expectedActionCount = 2
 
@@ -56,7 +56,7 @@ describe('saga', () => {
         ).then(() => {
 
             expect(store.getActions().length).toEqual(expectedActionCount)
-            expect(store.getActions()[0].type).toEqual(RETRIEVE_RESOURCES_SIMPLE)
+            expect(store.getActions()[0].type).toEqual(START_ASYNC)
             expect(store.getActions()[1].type).toEqual(RETRIEVE_RESOURCES)
             expect(store.getActions()[1].payload.resources).toEqual(JSON.parse(resourcesPayload))
         })

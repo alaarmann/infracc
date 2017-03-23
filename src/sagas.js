@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { RETRIEVE_RESOURCES, RETRIEVE_RESOURCES_SIMPLE } from './actions'
+import { RETRIEVE_RESOURCES, START_ASYNC } from './actions'
 import fetch from 'isomorphic-fetch'
 
 // worker Saga
@@ -15,7 +15,7 @@ export function* retrieveResources(action) {
 
 function* saga() {
     yield takeEvery(action =>
-    action.type === RETRIEVE_RESOURCES_SIMPLE && typeof action.payload === 'undefined',
+    action.type === START_ASYNC && action.payload && action.payload.actionType === RETRIEVE_RESOURCES,
         retrieveResources);
 }
 

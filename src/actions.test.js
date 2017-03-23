@@ -256,4 +256,19 @@ describe('closeComponent', () => {
     })
 })
 
+describe('startAsync', () => {
+    const AN_ACTION_TYPE = 'AN_ACTION_TYPE'
+    const AN_ACTION_PARAM = 'AN_ACTION_PARAM'
+
+    it('creates a meta action to start an async action', () => {
+        const expectedAction = {
+            type: actions.START_ASYNC,
+            payload: {actionType : AN_ACTION_TYPE, actionParam : AN_ACTION_PARAM}
+        }
+        expect(actions.startAsync(AN_ACTION_TYPE, AN_ACTION_PARAM)).toEqual(expectedAction)
+    })
+    it('is FSA compliant', () => {
+        expect(isFSA(actions.startAsync(AN_ACTION_TYPE, AN_ACTION_PARAM))).toBe(true)
+    })
+})
 
