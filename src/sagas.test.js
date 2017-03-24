@@ -1,14 +1,13 @@
 /**
  * Created by al on 23.03.17.
  */
-import {call, put} from 'redux-saga/effects'
+import {call, put, take } from 'redux-saga/effects'
 import fetch from 'isomorphic-fetch'
 import createSagaMiddleware from 'redux-saga'
 import configureMockStore from 'redux-mock-store'
 import nock from 'nock'
 import { startAsync, RETRIEVE_RESOURCES, START_ASYNC, registerPending, deregisterPending } from './actions'
 import { retrieveResources } from './sagas'
-import saga from './sagas'
 
 describe('retrieveResources', () => {
 
@@ -47,17 +46,19 @@ describe('saga', () => {
         const mockStore = configureMockStore(middlewares)
 
         const store = mockStore({})
-        sagaMiddleware.run(saga)
+
+        const testSaga = function* () {
+            yield take(action =>
+            action.type === START_ASYNC && action.payload && action.payload.actionType === RETRIEVE_RESOURCES)
+            yield call(retrieveResources)
+        }
+        const task = sagaMiddleware.run(testSaga)
 
         store.dispatch(startAsync(RETRIEVE_RESOURCES))
 
         const expectedActionCount = 4
 
-        return new Promise((resolve) =>
-            store.subscribe(
-                () => store.getActions().length === expectedActionCount && resolve()
-            )
-        ).then(() => {
+        return task.done.then(() => {
 
             expect(store.getActions().length).toEqual(expectedActionCount)
             expect(store.getActions()[0].type).toEqual(START_ASYNC)
